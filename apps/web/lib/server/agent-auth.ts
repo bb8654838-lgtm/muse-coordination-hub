@@ -17,7 +17,7 @@ export function hashSecret(secret: string, pepper: string): string {
   return createHmac("sha256", pepper).update(secret, "utf8").digest("hex");
 }
 
-export function requiredServerSecret(name: "MUSE_AGENT_KEY_PEPPER" | "MUSE_INVITE_KEY_PEPPER") {
+export function requiredServerSecret(name: "MUSE_AGENT_KEY_PEPPER" | "MUSE_INVITE_PEPPER") {
   const value = process.env[name];
   if (!value || value.length < 32) {
     throw new Error(`${name} must contain at least 32 characters.`);

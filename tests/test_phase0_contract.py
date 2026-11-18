@@ -133,7 +133,7 @@ class PhaseZeroContractTests(unittest.TestCase):
             "NEXT_PUBLIC_SUPABASE_ANON_KEY",
             "SUPABASE_SERVICE_ROLE_KEY",
             "MUSE_AGENT_KEY_PEPPER",
-            "MUSE_INVITE_KEY_PEPPER",
+            "MUSE_INVITE_PEPPER",
             "MUSE_HUB_URL",
             "MUSE_AGENT_KEY",
         }

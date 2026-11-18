@@ -33,7 +33,7 @@ export async function POST(request: NextRequest) {
     const rawAgentKey = `muse_${randomBytes(32).toString("base64url")}`;
     const inviteHash = hashSecret(
       inviteKey,
-      requiredServerSecret("MUSE_INVITE_KEY_PEPPER"),
+      requiredServerSecret("MUSE_INVITE_PEPPER"),
     );
     const agentKeyHash = hashSecret(
       rawAgentKey,

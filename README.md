@@ -80,11 +80,11 @@ Do not expose `SUPABASE_SERVICE_ROLE_KEY`, either HMAC pepper, the database pass
 
 ### Create the first workspace
 
-Generate independent random peppers, an invite key, and its HMAC hash outside the database. The hash inserted into `workspaces.invite_key_hash` must use the same `MUSE_INVITE_KEY_PEPPER` configured on Vercel.
+Generate independent random peppers, an invite key, and its HMAC hash outside the database. The hash inserted into `workspaces.agent_invite_hash` must use the same `MUSE_INVITE_PEPPER` configured on Vercel.
 
 ```bash
 export INVITE_KEY="$(openssl rand -base64 32)"
-export INVITE_HASH="$(node -e 'const {createHmac}=require("node:crypto"); process.stdout.write(createHmac("sha256", process.env.MUSE_INVITE_KEY_PEPPER).update(process.env.INVITE_KEY).digest("hex"))')"
+export INVITE_HASH="$(node -e 'const {createHmac}=require("node:crypto"); process.stdout.write(createHmac("sha256", process.env.MUSE_INVITE_PEPPER).update(process.env.INVITE_KEY).digest("hex"))')"
 printf 'Store this invite key securely: %s\n' "$INVITE_KEY"
 ```
 
@@ -178,7 +178,7 @@ Required server/build variables:
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 - `SUPABASE_SERVICE_ROLE_KEY`
 - `MUSE_AGENT_KEY_PEPPER`
-- `MUSE_INVITE_KEY_PEPPER`
+- `MUSE_INVITE_PEPPER`
 
 The two peppers must be independent, randomly generated values of at least 32 characters. Mark the service key and both peppers as sensitive; never prefix them with `NEXT_PUBLIC_`.
 
