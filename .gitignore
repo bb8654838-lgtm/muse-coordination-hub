@@ -1,0 +1,27 @@
+# dependencies
+node_modules/
+
+# Next.js
+.next/
+out/
+
+# local environment
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+
+# test and tooling output
+coverage/
+.pytest_cache/
+*.tsbuildinfo
+*.log
+
+# editors / OS
+.DS_Store
+.idea/
+.vscode/

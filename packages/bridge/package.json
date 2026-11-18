@@ -1,0 +1,20 @@
+{
+  "name": "@muse/bridge",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Node.js and Python bridges for Muse Coordination Hub.",
+  "license": "MIT",
+  "bin": {
+    "muse-bridge": "./src/cli.mjs"
+  },
+  "scripts": {
+    "test:node": "node --test test/node-client.test.mjs",
+    "test:python": "python3 -m unittest discover -s test -p 'test_python_client.py'",
+    "test": "npm run test:node && npm run test:python",
+    "check": "node --check src/client.mjs && node --check src/cli.mjs && python3 -m compileall -q python/muse_bridge && npm test"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

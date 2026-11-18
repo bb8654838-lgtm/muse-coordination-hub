@@ -1,0 +1,2 @@
+-- Intentionally empty.
+-- Workspaces and agent identities are created dynamically by their owners.

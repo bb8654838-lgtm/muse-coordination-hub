@@ -1,0 +1,22 @@
+{
+  "name": "muse-coordination-hub",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Open-source coordination hub for multi-agent workspaces.",
+  "license": "MIT",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "npm run build --workspace @muse/web",
+    "typecheck": "npm run typecheck --workspace @muse/web",
+    "validate:schema": "python3 scripts/validate_schema.py",
+    "test": "npm run validate:schema && python3 -m unittest tests/test_phase0_contract.py && npm run check --workspace @muse/bridge",
+    "check": "npm run validate:schema && npm run typecheck && npm run check --workspace @muse/bridge"
+  },
+  "engines": {
+    "node": ">=20.9.0",
+    "npm": ">=10.0.0"
+  }
+}
