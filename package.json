@@ -18,5 +18,6 @@
   "engines": {
     "node": ">=20.9.0",
     "npm": ">=10.0.0"
-  }
+  },
+  "author": "Entouraged.sam <https://entouraged-sam.vercel.app/>"
 }

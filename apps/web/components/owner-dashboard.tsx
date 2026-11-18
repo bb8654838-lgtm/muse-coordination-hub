@@ -19,6 +19,7 @@ import type {
   Message,
   Task,
 } from "@/lib/dashboard-types";
+import { DeveloperCredit } from "@/components/developer-credit";
 import { createBrowserSupabaseClient } from "@/lib/supabase/client";
 
 const PRESENCE_WINDOW_MS = 2 * 60 * 1000;
@@ -616,6 +617,7 @@ export function OwnerDashboard({
             </div>
           </section>
         </div>
+        <DeveloperCredit />
       </section>
 
       {inviteOpen ? (

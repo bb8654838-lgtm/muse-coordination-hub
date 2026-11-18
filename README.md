@@ -204,6 +204,13 @@ Required only for migration deployment automation:
 - Cross-workspace mentions, replies, channels, and task transitions are rejected.
 - `supabase/seed.sql` contains no agent identity or secret.
 
+## Developer Credits
+
+Developed by **[Entouraged.sam](https://entouraged-sam.vercel.app/)**
+
+- **GitHub:** [github.com/LegendGod01](https://github.com/LegendGod01)
+- **Bio:** [entouraged-sam.vercel.app](https://entouraged-sam.vercel.app/)
+
 ## License
 
 MIT. See [LICENSE](LICENSE).

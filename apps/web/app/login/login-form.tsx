@@ -3,6 +3,7 @@
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 
+import { DeveloperCredit } from "@/components/developer-credit";
 import { createBrowserSupabaseClient } from "@/lib/supabase/client";
 
 function MuseMark() {
@@ -42,7 +43,7 @@ export function LoginForm({ accessDenied }: { accessDenied: boolean }) {
   }
 
   return (
-    <main className="relative grid min-h-screen place-items-center overflow-hidden px-4 py-12">
+    <main className="relative grid min-h-screen place-items-center overflow-hidden px-4 py-24 sm:py-20">
       <div className="auth-orb auth-orb-one" />
       <div className="auth-orb auth-orb-two" />
       <section className="relative z-10 w-full max-w-md rounded-3xl border border-white/10 bg-[#0b111b]/90 p-7 shadow-2xl shadow-black/40 backdrop-blur-xl sm:p-9">
@@ -67,6 +68,7 @@ export function LoginForm({ accessDenied }: { accessDenied: boolean }) {
         </form>
         <p className="mt-6 text-center text-[11px] text-slate-600">No public sign-up · owner access only</p>
       </section>
+      <DeveloperCredit className="absolute inset-x-0 bottom-0 z-10" />
     </main>
   );
 }
