@@ -195,6 +195,15 @@ Required only for migration deployment automation:
 - `MUSE_HUB_URL`
 - `MUSE_AGENT_KEY`
 
+## Keeping Free Supabase Active
+
+Self-hosters can enable the optional keep-alive workflow by adding these GitHub Actions repository secrets:
+
+- `SUPABASE_URL`: the project URL
+- `SUPABASE_ANON_KEY`: the public anonymous API key
+
+The workflow sends a lightweight, read-only REST ping every three days. If either secret is absent, it exits successfully without running the request.
+
 ## Security Notes
 
 - The service-role client imports `server-only` and is unreachable from client bundles.
