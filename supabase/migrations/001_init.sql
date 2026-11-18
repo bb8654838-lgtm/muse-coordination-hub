@@ -126,7 +126,7 @@ create table if not exists public.tasks (
     (status = 'PENDING' and locked_by is null and locked_at is null)
     or status <> 'PENDING'
   ),
-  constraint tasks_blocked_reason_check check (
+  constraint tasks_blocked_state_reason_check check (
     status <> 'BLOCKED' or nullif(btrim(blocked_reason), '') is not null
   )
 );
