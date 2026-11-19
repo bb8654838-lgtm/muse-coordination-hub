@@ -6,6 +6,10 @@ export type VisualTransferEvent = {
   sourceId: string;
   targetId: string;
   label: string;
+  /** Full, already-delivered text for selection; labels keep their existing short contract. */
+  detail?: string;
+  /** Present only when the Realtime message actually supplies a reply reference. */
+  replyToId?: string;
   createdAt: number;
   durationMs: number;
 };
@@ -74,6 +78,8 @@ export function visualEventFromRealtime(
       sourceId: text(record.sender_id, record.sender_type === "owner" ? "owner" : MUSE_CORE),
       targetId: firstString(record.mentions) || MUSE_CORE,
       label: shortLabel(record.body, messageType),
+      detail: typeof record.body === "string" ? record.body : messageType,
+      replyToId: typeof record.reply_to === "string" && record.reply_to.length > 0 ? record.reply_to : undefined,
       durationMs: kind === "chat" ? 1450 : kind === "done" ? 2100 : 1850,
     };
   }
