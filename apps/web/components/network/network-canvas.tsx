@@ -34,6 +34,21 @@ function eventSummary(event: SceneTransfer) {
   return `LIVE ${event.kind === "chat" ? "message" : event.kind === "file" ? "handoff" : event.kind} · ${event.label}`;
 }
 
+/** History remains inspectable but simulated/presence events never replace real activity. */
+export function latestActivityFromHistory(events: readonly SceneTransfer[]): SceneTransfer | undefined {
+  let latest: SceneTransfer | undefined;
+  for (const event of events) {
+    if (event.id.startsWith("preview:") || /^(presence|heartbeats|agents|channels):/.test(event.id)) continue;
+    if (!Number.isFinite(event.createdAt) || event.createdAt <= 0 || event.createdAt > 8.64e15) continue;
+    if (!latest || event.createdAt >= latest.createdAt) latest = event;
+  }
+  return latest;
+}
+
+export function shouldAnimateVisualEvent(event: Pick<SceneTransfer, "createdAt">, now: number, observedAfter = Number.NEGATIVE_INFINITY): boolean {
+  return Number.isFinite(event.createdAt) && event.createdAt > observedAfter && now - event.createdAt >= -2000 && now - event.createdAt <= 15000;
+}
+
 export function NetworkCanvas({ agents, transfers, queuedCount, realtimeState, selectedAgentId, onSelectAgent, onPreview }: NetworkCanvasProps) {
   const activeAgents = useMemo(() => agents.filter((agent) => agent.status !== "revoked").slice(0, 10), [agents]);
   const [renderMode, setRenderMode] = useState<"loading" | "webgl" | "fallback">("loading");
@@ -51,13 +66,16 @@ export function NetworkCanvas({ agents, transfers, queuedCount, realtimeState, s
   const labelRefs = useRef(new Map<string, HTMLButtonElement>());
   const bubbleRefs = useRef(new Map<string, HTMLButtonElement>());
   const hqRef = useRef<HTMLDivElement>(null);
-  const seenIds = useRef(new Set<string>());
+  const seenIds = useRef(new Set(transfers.map((event) => event.id)));
+  const mountedAt = useRef(Date.now());
   const cancelledRuns = useRef(new Set<string>());
   const bubbleTimers = useRef(new Map<string, ReturnType<typeof setTimeout>>());
   const bubbleEvents = useRef(new Map<string, Bubble>());
   const propsRef = useRef({ activeAgents, transfers, selectedAgentId, onSelectAgent });
   propsRef.current = { activeAgents, transfers, selectedAgentId, onSelectAgent };
-  const latest = transfers.at(-1) as SceneTransfer | undefined;
+  const latest = useMemo(() => latestActivityFromHistory(transfers as readonly SceneTransfer[]), [transfers]);
+  const latestTimestamp = useMemo(() => latest ? new Date(latest.createdAt).toISOString() : "", [latest]);
+  const latestCue = latest ? moduleRef.current?.classifyVisualEvent(latest).cue ?? latest.kind : null;
 
   const selectAgent = useCallback((id: string) => {
     const agent = propsRef.current.activeAgents.find((candidate) => candidate.id === id);
@@ -89,6 +107,7 @@ export function NetworkCanvas({ agents, transfers, queuedCount, realtimeState, s
     const api = moduleRef.current;
     if (!stage || !api) return;
     const knownIds = new Set(propsRef.current.activeAgents.map((agent) => agent.id));
+    stage.setConversationRoute(latestActivityFromHistory(propsRef.current.transfers as readonly SceneTransfer[]));
     const additions: Bubble[] = [];
     for (const item of propsRef.current.transfers) {
       const event = item as SceneTransfer;
@@ -102,8 +121,8 @@ export function NetworkCanvas({ agents, transfers, queuedCount, realtimeState, s
         continue;
       }
       if (runId && cancelledRuns.current.has(runId)) continue;
-      // Old queue history is still real history, but must not restart as a new flight.
-      if (Date.now() - event.createdAt > 15000) continue;
+      // Pre-mount history is rail-only, including recent history; new events alone start flights.
+      if (!shouldAnimateVisualEvent(event, Date.now(), mountedAt.current)) continue;
       stage.receive(event);
       if (classification.cue === "presence") continue;
       const route = api.resolveRoute(event, knownIds);
@@ -259,7 +278,7 @@ export function NetworkCanvas({ agents, transfers, queuedCount, realtimeState, s
         </div>
       </div>
 
-      <div className={`network-stage sentinel-stage is-${renderMode}`} onKeyDown={moveFocus} ref={networkRef} role="group" aria-label="Interactive Muse Sentinel constellation">
+      <div className={`network-stage sentinel-stage is-${renderMode} ${mobile ? "is-narrow" : ""} ${activeAgents.length <= 4 ? "is-hero h-[380px] sm:h-[440px] lg:h-[520px]" : "h-[520px] sm:h-[580px] lg:h-[660px]"}`} onKeyDown={moveFocus} ref={networkRef} role="group" aria-label="Interactive Muse Sentinel constellation">
         <div className="sentinel-renderer" ref={mountRef} aria-hidden="true" />
         {stageNotice ? <p className="sentinel-stage-status" role="status">{stageNotice}</p> : null}
         {renderMode === "fallback" ? <div className="fallback-hq"><MuseMark active={false} label="Muse HQ" /><strong>MUSE HQ</strong></div> : null}
@@ -296,6 +315,24 @@ export function NetworkCanvas({ agents, transfers, queuedCount, realtimeState, s
         <div className="sentinel-stage-hint" aria-hidden="true">{motionReduced ? "Reduced motion · static overview" : mobile ? "Drag sideways · pinch to zoom" : "Drag to orbit · scroll to zoom"}<span>{selectedName ?? "Overview fits the full fleet"}</span></div>
       </div>
 
+      <div className="sentinel-activity-rail" aria-label="Latest real workspace activity">
+        {latest ? (
+          <button className="activity-entry" type="button" onClick={() => {
+            const classification = moduleRef.current?.classifyVisualEvent(latest) ?? { cue: latest.kind, mode: "live" as const, title: "Received activity" };
+            const route = moduleRef.current?.resolveRoute(latest, new Set(activeAgents.map((agent) => agent.id)));
+            setDetail({ event: latest, ...classification, anchorId: route?.targetId ?? latest.targetId, unresolved: route?.unresolved ?? false });
+          }} title="Inspect the last real received event; this does not replay a flight">
+            <span className="activity-dot" aria-hidden="true" />
+            <span className="activity-content">
+              <span className="activity-heading"><b>Latest received</b><span>{latestCue === "file" ? "HANDOFF" : latestCue === "task" ? "TASK" : latestCue === "done" ? "COMPLETION" : latestCue === "reply" ? "REPLY" : "MESSAGE"}</span><time dateTime={latestTimestamp} title={latestTimestamp}>{latestTimestamp.slice(latestTimestamp.indexOf("T") + 1, latestTimestamp.indexOf("T") + 9)} UTC</time></span>
+              <span className="activity-route">{endpointName(latest.sourceId)} <span aria-hidden="true">→</span> {endpointName(latest.targetId)}</span>
+              <span className="activity-copy">{latest.detail ?? latest.label}</span>
+            </span>
+            <span className="activity-open" aria-hidden="true">↗</span>
+          </button>
+        ) : <p className="activity-empty"><span aria-hidden="true">◉</span> Dock links stay illuminated. Waiting for the first real workspace activity.</p>}
+      </div>
+
       {detail ? (
         <aside className="sentinel-detail" aria-label="Event details">
           <div className="detail-heading"><div><span className={`detail-mode detail-${detail.mode}`}>{detail.mode === "preview" ? "PREVIEW · SIMULATED" : "LIVE · REALTIME"}</span><h3>Event details</h3></div><button aria-label="Close event details" onClick={() => setDetail(null)} type="button">×</button></div>
@@ -325,11 +362,19 @@ export function NetworkCanvas({ agents, transfers, queuedCount, realtimeState, s
         .sentinel-camera-controls button:hover:not(:disabled) { color: #f0f7ff; border-color: #69b4de; }
         .sentinel-camera-controls button:disabled { opacity: .4; cursor: default; }
         .sentinel-camera-controls button:focus-visible, .sentinel-label:focus-visible, .event-bubble:focus-visible { outline: 2px solid #79d9ff; outline-offset: 3px; }
-        .sentinel-stage { position: relative; isolation: isolate; width: 100%; min-width: 0; height: clamp(440px, 58vh, 660px); overflow: hidden; border: 1px solid #23324b; border-radius: 15px; background: radial-gradient(ellipse at 50% 45%, #152345 0%, #080e1c 48%, #050912 100%); perspective: none; transform-style: flat; }
+        .sentinel-stage { position: relative; isolation: isolate; width: 100%; min-width: 0; height: 660px; overflow: hidden; border: 1px solid #23324b; border-radius: 15px; background: radial-gradient(ellipse at 50% 45%, #152345 0%, #080e1c 48%, #050912 100%); perspective: none; transform-style: flat; }
         .sentinel-renderer { position: absolute; inset: 0; touch-action: pan-y; }
         .sentinel-renderer :global(canvas) { display: block; width: 100%; height: 100%; touch-action: pan-y; }
         .sentinel-labels, .sentinel-bubbles { position: absolute; inset: 0; pointer-events: none; }
-        .sentinel-label { position: absolute; z-index: 1; top: 0; left: 0; width: 106px; max-width: 30%; padding: 5px 7px; border: 1px solid #39506c80; border-radius: 7px; background: #07111cda; color: #dae9fb; font: inherit; text-align: center; pointer-events: auto; cursor: pointer; will-change: transform; }
+        .sentinel-label { position: absolute; z-index: 5; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; min-width: 104px; max-width: 148px; min-height: 44px; padding: 6px 10px; border: 1px solid #4c647e88; border-radius: 9px; background: linear-gradient(160deg, #192637f5, #0b1220f5); color: #dde9f5; font: inherit; font-size: 11px; line-height: 1.1; pointer-events: auto; cursor: pointer; white-space: nowrap; will-change: transform; }
+        .sentinel-label::before { content: ""; position: absolute; bottom: calc(100% + 2px); left: 50%; width: 1px; height: var(--label-leader-height, 7px); transform: rotate(var(--label-leader-angle, 0deg)); transform-origin: 50% 100%; background: linear-gradient(to top, #7397bf70, #7397bf18); pointer-events: none; }
+        .sentinel-stage.is-hero { height: 520px; }
+        .sentinel-stage.is-narrow .sentinel-label { width: 84px; min-width: 84px; max-width: 84px; min-height: 36px; padding: 5px 7px; font-size: 10px; }
+        .sentinel-stage.is-narrow .sentinel-label-hq { width: 96px; min-width: 96px; max-width: 96px; }
+        .sentinel-stage.is-narrow .sentinel-role { display: none; }
+        .sentinel-stage.is-narrow .event-bubble { width: min(196px, calc(100% - 28px)); min-height: 44px; max-height: 76px; padding: 7px 9px; }
+        .sentinel-stage.is-narrow .bubble-copy { -webkit-line-clamp: 1; font-size: 11px; }
+        .sentinel-stage.is-narrow .bubble-detail-hint { font-size: 8px; }
         .sentinel-label[tabindex="0"], .sentinel-label.is-selected { z-index: 2; }
         .sentinel-name { display: flex; justify-content: center; align-items: center; gap: 5px; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 11px; font-weight: 600; }
         .sentinel-name i { width: 5px; height: 5px; flex: 0 0 5px; border-radius: 50%; background: #627089; box-shadow: 0 0 6px #62708966; }
@@ -383,7 +428,7 @@ export function NetworkCanvas({ agents, transfers, queuedCount, realtimeState, s
           .camera-presets, .camera-secondary { gap: 5px; }
           .sentinel-camera-controls button { min-height: 44px; min-width: 39px; padding: 8px 9px; }
           .sentinel-stage { height: 520px; border-radius: 11px; }
-          .sentinel-label { width: 78px; padding: 5px; }
+          .sentinel-label { width: 84px; min-width: 84px; max-width: 84px; min-height: 36px; padding: 5px 7px; font-size: 10px; }
           .sentinel-name { font-size: 10px; gap: 3px; }
           .sentinel-role { display: none; }
           .sentinel-hq-label { width: 96px; }
@@ -395,6 +440,24 @@ export function NetworkCanvas({ agents, transfers, queuedCount, realtimeState, s
           .sentinel-stage-hint { font-size: 8px; }
           .sentinel-detail { padding: 12px; }
         }
+
+        .sentinel-activity-rail { margin-top: 10px; min-width: 0; border: 1px solid #36445e; border-radius: 11px; overflow: hidden; background: linear-gradient(115deg, #1c1731, #0e1929 55%, #0b1421); }
+        .activity-entry { display: flex; align-items: center; gap: 11px; width: 100%; min-width: 0; min-height: 76px; padding: 11px 13px; border: 0; background: transparent; color: #c6d8ec; text-align: left; font: inherit; cursor: pointer; }
+        .activity-entry:focus-visible { outline: 2px solid #bd97ff; outline-offset: -3px; }
+        .activity-dot { flex: 0 0 8px; width: 8px; height: 8px; border-radius: 50%; background: #b38aff; box-shadow: 0 0 9px #9663cc66; }
+        .activity-content { flex: 1; min-width: 0; }
+        .activity-heading { display: flex; flex-wrap: wrap; align-items: center; gap: 5px 9px; font-size: 9px; line-height: 1.4; letter-spacing: .07em; text-transform: uppercase; }
+        .activity-heading b { color: #d3bbff; font-weight: 600; }
+        .activity-heading > span { color: #92adc7; }
+        .activity-heading time { margin-left: auto; color: #8f9eb6; font-variant-numeric: tabular-nums; letter-spacing: .02em; }
+        .activity-route { display: block; margin-top: 3px; font-size: 10px; color: #adc5df; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .activity-route > span { padding: 0 4px; color: #9871cc; }
+        .activity-copy { display: block; margin-top: 3px; font-size: 11px; line-height: 1.35; color: #dae3f0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .activity-open { flex: 0 0 auto; color: #be9cec; }
+        .activity-empty { display: flex; align-items: center; gap: 9px; padding: 13px; margin: 0; color: #8297b2; font-size: 11px; line-height: 1.6; }
+        .activity-empty > span { color: #9973cc; }
+        @media (max-width: 639px) { .sentinel-stage.is-hero { height: 380px; } }
+        @media (min-width: 640px) and (max-width: 1023px) { .sentinel-stage { height: 580px; } .sentinel-stage.is-hero { height: 440px; } }
         @media (prefers-reduced-motion: reduce) { .sentinel-label, .event-bubble, .sentinel-camera-controls button { transition: none; animation: none; } }
       `}</style>
     </section>
