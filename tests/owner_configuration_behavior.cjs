@@ -117,7 +117,7 @@ async function main() {
   const acknowledgment = await saved.json();
   assert.equal(acknowledgment.desired_revision, 1);
   assert.equal(acknowledgment.applied_revision, 0);
-  assert.equal(acknowledgment.sync_badge, "Not synced — Stage B required");
+  assert.equal(acknowledgment.sync_badge, "Pending sync");
   const write = rpcCalls.at(-1);
   assert.equal(write.name, "save_agent_configuration");
   assert.equal(write.args.p_base_revision, 0);

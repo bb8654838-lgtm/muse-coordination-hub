@@ -139,10 +139,10 @@ export async function saveSkill(context: OwnerContext, body: unknown) {
 }
 export async function getAgentConfiguration(context: OwnerContext, agentId: string) {
   await requireAgent(context, agentId);
-  const { data, error } = await context.db.from("agent_config_state").select("desired_revision, applied_revision, desired_configuration, updated_at").eq("workspace_id", context.workspaceId).eq("agent_id", agentId).maybeSingle();
+  const { data, error } = await context.db.from("agent_config_state").select("*").eq("workspace_id", context.workspaceId).eq("agent_id", agentId).maybeSingle();
   if (error) databaseFailure(error);
   const configuration = (data?.desired_configuration ?? emptyConfiguration()) as DesiredConfiguration;
-  return { workspace_id: context.workspaceId, agent_id: agentId, desired_revision: data?.desired_revision ?? 0, applied_revision: data?.applied_revision ?? 0, configuration: { ...configuration, permissions: { ...emptyConfiguration().permissions, ...configuration.permissions } }, sync_badge: configurationSyncBadge(data?.desired_revision ?? 0), updated_at: data?.updated_at ?? null };
+  return { workspace_id: context.workspaceId, agent_id: agentId, desired_revision: data?.desired_revision ?? 0, applied_revision: data?.applied_revision ?? 0, configuration: { ...configuration, permissions: { ...emptyConfiguration().permissions, ...configuration.permissions } }, sync_revision: data?.sync_revision ?? 0, sync_status: data?.sync_status ?? ((data?.desired_revision ?? 0) ? "pending" : "unconfigured"), sync_error: data?.sync_error ?? null, sync_badge: configurationSyncBadge(data?.desired_revision ?? 0, data?.applied_revision ?? 0, data?.sync_status, data?.sync_revision ?? 0), updated_at: data?.updated_at ?? null };
 }
 export async function saveAgentConfiguration(context: OwnerContext, agentId: string, body: unknown) {
   const parsed = validateConfigurationInput(body);

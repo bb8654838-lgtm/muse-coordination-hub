@@ -99,7 +99,7 @@ class SkillRegistryContractTests(unittest.TestCase):
 
     def test_admin_mobile_access_and_honest_sync_copy(self) -> None:
         ui = (ROOT / "apps/web/components/admin/agent-configuration-panel.tsx").read_text()
-        for phrase in ["Unconfigured", "Save configuration", "Cancel", "Token estimate", "Action permissions", "SKILL.md", "Not synced", "Stage B"]:
+        for phrase in ["Unconfigured", "Save configuration", "Cancel", "Token estimate", "Action permissions", "SKILL.md", "Bridge sync is pending", "no runtime actions were executed"]:
             self.assertIn(phrase, ui)
         self.assertIn("base_revision", ui)
         self.assertIn("409", ui)

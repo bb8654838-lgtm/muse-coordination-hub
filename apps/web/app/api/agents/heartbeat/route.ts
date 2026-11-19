@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 import { authenticateAgent } from "@/lib/server/agent-auth";
+import { bridgeHeartbeatConfiguration } from "@/lib/server/bridge-configuration";
 import { apiError } from "@/lib/server/http";
 import { createAdminSupabaseClient } from "@/lib/supabase/admin";
 
@@ -37,7 +38,8 @@ export async function POST(request: NextRequest) {
     );
 
     if (error) return apiError("heartbeat_failed", "Heartbeat could not be recorded.", 500);
-    return NextResponse.json({ ok: true, seen_at: seenAt });
+    const configuration = await bridgeHeartbeatConfiguration(agent.workspace_id, agent.id);
+    return NextResponse.json({ ok: true, seen_at: seenAt, ...(configuration ? { configuration } : {}) }, { headers: { "Cache-Control": "private, no-store" } });
   } catch {
     return apiError("heartbeat_unavailable", "Heartbeat service is unavailable.", 503);
   }

@@ -21,8 +21,12 @@ const integer = (v: unknown, minimum: number): v is number => typeof v === "numb
 const failure = (message: string): { ok: false; message: string } => ({ ok: false, message });
 export function emptyPermissions(): Permissions { return Object.fromEntries(PERMISSION_KEYS.map(k => [k, false])) as Permissions; }
 export function emptyConfiguration(): DesiredConfiguration { return { role: null, skills: [], instructions: "", permissions: emptyPermissions() }; }
-export function configurationSyncBadge(desiredRevision: number, _appliedRevision = 0): string {
-  return desiredRevision === 0 ? "Unconfigured" : "Not synced — Stage B required";
+export function configurationSyncBadge(desiredRevision: number, appliedRevision = 0, syncStatus?: string, syncRevision = desiredRevision): string {
+  if (desiredRevision === 0) return "Unconfigured";
+  if (appliedRevision === desiredRevision) return "Synced";
+  if (syncRevision === desiredRevision && syncStatus === "failed") return "Sync failed";
+  if (syncRevision === desiredRevision && syncStatus === "staged") return "Staged";
+  return "Pending sync";
 }
 export function estimateTokenCount(text: string): number { return Math.ceil(text.length / 4); }
 function parsePermissions(value: unknown): Validation<Permissions> {

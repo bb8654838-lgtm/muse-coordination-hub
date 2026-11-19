@@ -56,6 +56,8 @@ def main() -> None:
     client = BridgeClient(args.url, agent_key=args.key)
 
     try:
+        if args.key and args.command not in ("register", "heartbeat"):
+            client.sync_configuration()
         if args.command == "register":
             result = client.register(
                 workspace_id=args.workspace,

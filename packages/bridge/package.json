@@ -9,10 +9,10 @@
     "muse-bridge": "./src/cli.mjs"
   },
   "scripts": {
-    "test:node": "node --test test/node-client.test.mjs",
-    "test:python": "python3 -m unittest discover -s test -p 'test_python_client.py'",
+    "test:node": "node --test test/*.test.mjs",
+    "test:python": "PYTHONPATH=python python3 -m unittest discover -s test -p 'test_*.py'",
     "test": "npm run test:node && npm run test:python",
-    "check": "node --check src/client.mjs && node --check src/cli.mjs && python3 -m compileall -q python/muse_bridge && npm test"
+    "check": "node --check src/client.mjs && node --check src/cli.mjs && node --check src/configuration-sync.mjs && python3 -m compileall -q python/muse_bridge && npm test"
   },
   "engines": {
     "node": ">=20.0.0"

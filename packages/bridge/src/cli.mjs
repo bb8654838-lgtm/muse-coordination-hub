@@ -75,6 +75,7 @@ async function main() {
     agentKey: options.key || process.env.MUSE_AGENT_KEY,
   });
 
+  if ((options.key || process.env.MUSE_AGENT_KEY) && command !== "heartbeat" && command !== "register") await client.syncConfiguration();
   let result;
   switch (command) {
     case "register":

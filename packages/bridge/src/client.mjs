@@ -1,3 +1,5 @@
+import { createConfigurationSync } from "./configuration-sync.mjs";
+
 const DEFAULT_TIMEOUT_MS = 30_000;
 
 export class BridgeError extends Error {
@@ -40,6 +42,7 @@ export function createBridgeClient({
   agentKey,
   fetchImpl = globalThis.fetch,
   timeoutMs = DEFAULT_TIMEOUT_MS,
+  skillsDirectory,
 } = {}) {
   if (typeof fetchImpl !== "function") {
     throw new TypeError("A Fetch-compatible implementation is required");
@@ -95,9 +98,13 @@ export function createBridgeClient({
     return data;
   }
 
+  let configurationSync = createConfigurationSync({ request, baseUrl: origin, agentKey, skillsDirectory });
+
   return {
-    register({ workspaceId, inviteKey, displayName, role }) {
-      return request("/api/agents/register", {
+    syncConfiguration() { return configurationSync(); },
+
+    async register({ workspaceId, inviteKey, displayName, role }) {
+      const result = await request("/api/agents/register", {
         method: "POST",
         authenticated: false,
         payload: {
@@ -107,13 +114,18 @@ export function createBridgeClient({
           role,
         },
       });
+      if (result?.agent_key) {
+        agentKey = result.agent_key;
+        configurationSync = createConfigurationSync({ request, baseUrl: origin, agentKey, skillsDirectory });
+        await configurationSync();
+      }
+      return result;
     },
 
-    heartbeat({ status = "online", metadata = {} } = {}) {
-      return request("/api/agents/heartbeat", {
-        method: "POST",
-        payload: { status, metadata },
-      });
+    async heartbeat({ status = "online", metadata = {} } = {}) {
+      const result = await request("/api/agents/heartbeat", { method: "POST", payload: { status, metadata } });
+      if (Number.isInteger(result?.configuration?.revision) && result.configuration.revision > 0) await configurationSync(result.configuration.revision);
+      return result;
     },
 
     inbox({ limit = 50 } = {}) {

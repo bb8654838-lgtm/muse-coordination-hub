@@ -10,7 +10,7 @@ type WorkspaceRole = { id: string; name: string; description: string; current_ve
 type CustomSkill = { skill_id: string; version: number; name: string; description: string; content: string };
 type RolesResponse = { roles: WorkspaceRole[]; versions: RoleVersion[] };
 type SkillsResponse = { custom_skills: CustomSkill[] };
-type ConfigurationResponse = { agent_id: string; desired_revision: number; applied_revision: number; configuration: DesiredConfiguration; sync_badge: string };
+type ConfigurationResponse = { agent_id: string; desired_revision: number; applied_revision: number; sync_revision?: number; sync_status?: string; sync_error?: string | null; configuration: DesiredConfiguration; sync_badge: string };
 type SkillRow = { source: "bundled" | "custom"; id: string; version: string | number; name: string; description: string; tokens: number };
 class ApiFailure extends Error {
   constructor(message: string, public status: number, public code: string) { super(message); }
@@ -79,6 +79,24 @@ export function AgentConfigurationPanel({ workspaceId, agents, agentLimit, initi
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [agentId, workspaceId]);
 
+  // Badge-only refresh: never overwrite the owner's draft or its CAS base revision.
+  useEffect(() => {
+    if (!agentId || !loaded || loading || busy || needsSetup || conflict) return;
+    let cancelled = false;
+    const timer = window.setInterval(async () => {
+      try {
+        const fresh = await api<ConfigurationResponse>(configurationUrl(agentId));
+        if (cancelled) return;
+        if (fresh.desired_revision !== loaded.desired_revision) {
+          setConflict(true); setNotice("Configuration changed elsewhere. Reload before saving; your draft is preserved."); return;
+        }
+        setLoaded(previous => previous && previous.desired_revision === fresh.desired_revision ? { ...previous, applied_revision: fresh.applied_revision, sync_revision: fresh.sync_revision, sync_status: fresh.sync_status, sync_error: fresh.sync_error, sync_badge: fresh.sync_badge } : previous);
+      } catch { /* Transient badge refresh errors must not interrupt editing. */ }
+    }, 5000);
+    return () => { cancelled = true; window.clearInterval(timer); };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [agentId, loaded?.desired_revision, loading, busy, needsSetup, conflict]);
+
   const skillRows = useMemo(() => {
     const rows: SkillRow[] = bundledSkills.map((s: BundledSkill) => ({ source: "bundled", id: s.id, version: s.version, name: s.name, description: s.description, tokens: s.estimated_tokens }));
     const latest = new Map<string, CustomSkill>();
@@ -136,7 +154,7 @@ export function AgentConfigurationPanel({ workspaceId, agents, agentLimit, initi
       // Read back the exact agent before displaying a successful save or advancing the base revision.
       const confirmed = await api<ConfigurationResponse>(configurationUrl(agentId));
       if (confirmed.desired_revision <= loaded.desired_revision) throw new Error("The saved revision could not be confirmed. Reload before saving again.");
-      setLoaded(confirmed); setDraft(confirmed.configuration); setConflict(false); setNotice("Configuration saved. Not synced — Stage B required; no runtime actions were applied.");
+      setLoaded(confirmed); setDraft(confirmed.configuration); setConflict(false); setNotice("Configuration saved. Bridge sync is pending; no runtime actions were executed.");
     } catch (failure) {
       if (written) { setVerificationNeeded(true); setError("Save was accepted, but read-back confirmation failed. Reload the saved revision before another write."); }
       else report(failure);
@@ -183,12 +201,12 @@ export function AgentConfigurationPanel({ workspaceId, agents, agentLimit, initi
         <h2>Fleet slots</h2><p className="admin-muted">Any role can be assigned to any linked slot. Presets are optional, never automatic.</p>
         {Array.from({ length: Math.min(10, agentLimit || 10) }, (_, index) => {
           const agent = agents[index];
-          return agent ? <button key={agent.id} type="button" className={`admin-agent ${agentId === agent.id ? "is-active" : ""}`} aria-pressed={agentId === agent.id} disabled={busy} onClick={() => pickAgent(agent.id)}><span className="admin-slot">Slot {index + 1}</span><strong>{agent.display_name}</strong><span className="admin-muted">{agent.status} · {agentId === agent.id && loaded ? configurationSyncBadge(loaded.desired_revision) : "Select to inspect configuration"}</span></button> : <div key={`empty-${index}`} className="admin-agent admin-empty"><span className="admin-slot">Slot {index + 1}</span><strong>Not linked</strong><span className="admin-muted">Starts Unconfigured when linked.</span></div>;
+          return agent ? <button key={agent.id} type="button" className={`admin-agent ${agentId === agent.id ? "is-active" : ""}`} aria-pressed={agentId === agent.id} disabled={busy} onClick={() => pickAgent(agent.id)}><span className="admin-slot">Slot {index + 1}</span><strong>{agent.display_name}</strong><span className="admin-muted">{agent.status} · {agentId === agent.id && loaded ? configurationSyncBadge(loaded.desired_revision, loaded.applied_revision, loaded.sync_status, loaded.sync_revision ?? 0) : "Select to inspect configuration"}</span></button> : <div key={`empty-${index}`} className="admin-agent admin-empty"><span className="admin-slot">Slot {index + 1}</span><strong>Not linked</strong><span className="admin-muted">Starts Unconfigured when linked.</span></div>;
         })}
       </aside>
       <section className="admin-editor" aria-label="Role and skills editor" aria-busy={loading || busy}>
         <button type="button" className="admin-button admin-mobile-back" onClick={() => setMobileEditor(false)} disabled={busy}>← All slots</button>
-        <div className="admin-editor-heading"><div><h2>{activeAgent?.display_name ?? "Choose a linked agent"}</h2><p className="admin-muted">Desired state only. Register, heartbeat and inbox contracts are unchanged.</p></div><span className="admin-sync">{loaded ? configurationSyncBadge(loaded.desired_revision, loaded.applied_revision) : "Unconfigured"}</span></div>
+        <div className="admin-editor-heading"><div><h2>{activeAgent?.display_name ?? "Choose a linked agent"}</h2><p className="admin-muted">Desired state only. Register, heartbeat and inbox contracts are unchanged.</p></div><span className="admin-sync">{loaded ? configurationSyncBadge(loaded.desired_revision, loaded.applied_revision, loaded.sync_status, loaded.sync_revision ?? 0) : "Unconfigured"}</span></div>
         {!agentId && <p className="admin-banner">Link an agent from Fleet first. Linking does not assign a role, skills or action permissions.</p>}
         {loading && <p role="status" className="admin-banner">Loading owner configuration…</p>}
         {error && <div className="admin-banner admin-warning" role="alert"><p>{error}</p>{(conflict || verificationNeeded || !loaded) && <button className="admin-button" onClick={reloadConfiguration} disabled={busy || !agentId}>Reload saved configuration</button>}</div>}

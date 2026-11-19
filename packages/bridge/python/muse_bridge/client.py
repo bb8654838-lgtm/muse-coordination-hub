@@ -11,6 +11,8 @@ from collections.abc import Callable, Iterator
 from pathlib import Path
 from typing import Any
 
+from .configuration import ConfigurationSync
+
 Transport = Callable[[str, str, dict[str, str], dict[str, Any] | None], dict[str, Any]]
 
 
@@ -58,12 +60,14 @@ class BridgeClient:
         *,
         agent_key: str | None = None,
         transport: Transport | None = None,
+        skills_directory: str | Path | None = None,
     ) -> None:
         if not base_url:
             raise ValueError("base_url is required")
         self.base_url = base_url.rstrip("/")
         self.agent_key = agent_key
         self.transport = transport or _default_transport
+        self._configuration_sync = ConfigurationSync(lambda path, **options: self._request(path, **options), self.base_url, self.agent_key, skills_directory)
 
     def _request(
         self,
@@ -94,7 +98,7 @@ class BridgeClient:
         display_name: str,
         role: str,
     ) -> dict[str, Any]:
-        return self._request(
+        result = self._request(
             "/api/agents/register",
             method="POST",
             authenticated=False,
@@ -105,15 +109,27 @@ class BridgeClient:
                 "role": role,
             },
         )
+        if result.get("agent_key"):
+            self.agent_key = result["agent_key"]
+            self._configuration_sync = ConfigurationSync(self._request, self.base_url, self.agent_key, self._configuration_sync.root)
+            self.sync_configuration()
+        return result
+
+    def sync_configuration(self) -> dict[str, Any]:
+        return self._configuration_sync.sync()
 
     def heartbeat(
         self, *, status: str = "online", metadata: dict[str, Any] | None = None
     ) -> dict[str, Any]:
-        return self._request(
+        result = self._request(
             "/api/agents/heartbeat",
             method="POST",
             payload={"status": status, "metadata": metadata or {}},
         )
+        configuration = result.get("configuration")
+        if isinstance(configuration, dict) and type(configuration.get("revision")) is int and configuration["revision"] > 0:
+            self._configuration_sync.sync(configuration["revision"])
+        return result
 
     def inbox(self, *, limit: int = 50) -> dict[str, Any]:
         return self._request("/api/inbox", query={"limit": max(1, min(100, int(limit)))})

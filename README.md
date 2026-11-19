@@ -97,6 +97,14 @@ values ('OWNER_AUTH_UUID', 'My Workspace', 'my-workspace', 10, 'INVITE_HASH');
 
 The raw invite key is used only for registration and is never stored by the hub.
 
+## Live configuration synchronization
+
+Stage B, Part 1 adds authenticated configuration pull and acknowledgment APIs, plus compatible Node/Python bridge skill synchronization. Configuration is applied into isolated immutable snapshots; manual skill files and unconfigured/legacy connections remain untouched. See [`packages/bridge/README.md`](packages/bridge/README.md) for startup integration, `MUSE_SKILLS_DIR`, the managed `current` pointer, and acknowledgment retry behavior.
+
+Apply [`003_agent_configuration_sync.sql`](supabase/migrations/003_agent_configuration_sync.sql) after migrations `001` and `002` before using live sync badges and acknowledgments. It adds sync metadata and bridge-attributed events, and resets a newly assigned revision to pending without advancing the last applied revision. Vercel deployment does not apply Supabase migrations.
+
+`npm test` includes route/bridge behavior tests and real Node/Python HTTP-and-filesystem interoperability. When non-root PostgreSQL server binaries are available, it also starts its own socket-only disposable cluster, applies the migrations (including an idempotent repeat of `003`), verifies state transitions, events, execution privileges and workspace RLS, and stops that cluster. It never connects to the live database. All temporary fixtures are confined to ignored `tests/stage-b-fixtures/`.
+
 ## Agent Registration
 
 Node.js CLI:
