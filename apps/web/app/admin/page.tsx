@@ -24,8 +24,8 @@ export default async function AdminPage({ searchParams }: { searchParams: Promis
   if (agents.error) throw new Error("The workspace agent list could not be loaded.");
   if (setup.error && !isConfigurationSetupError(setup.error)) throw new Error("Configuration setup could not be verified.");
   const params = await searchParams;
-  return <main className="admin-shell">
-    <header className="admin-header"><div><span className="admin-eyebrow">Workspace configuration</span><h1>Roles &amp; Skills</h1><p>{workspace.name} · Owner-managed desired state</p></div><Link className="admin-button" href="/">Back to Fleet</Link></header>
+  return <main className="admin-shell min-w-0 w-full">
+    <header className="admin-header"><div className="min-w-0"><span className="admin-eyebrow">Workspace configuration</span><h1>Roles &amp; Skills</h1><p>{workspace.name} · Owner-managed desired state</p></div><Link className="admin-button" href="/">Back to Fleet</Link></header>
     <AgentConfigurationPanel workspaceId={workspace.id} agentLimit={workspace.agent_limit} agents={agents.data ?? []} initialAgentId={params.agent} setupRequired={!!setup.error} />
   </main>;
 }

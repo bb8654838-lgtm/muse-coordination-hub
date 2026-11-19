@@ -196,7 +196,7 @@ export function AgentConfigurationPanel({ workspaceId, agents, agentLimit, initi
 
   return <>
     {needsSetup && <section className="admin-banner admin-warning" role="status"><h2>Database setup required</h2><p>Run <code>supabase/migrations/002_agent_configuration.sql</code> in your Supabase SQL editor, then reload this page. This Stage A panel stays unavailable until setup is verified. No defaults have been assigned.</p><button className="admin-button" onClick={reloadConfiguration} disabled={busy || !agentId}>Verify setup again</button></section>}
-    <div className="admin-workspace" data-mobile-editor={mobileEditor ? "true" : "false"}>
+    <div className="admin-workspace min-w-0" data-mobile-editor={mobileEditor ? "true" : "false"}>
       <aside className="admin-sidebar" aria-label="Agent slots">
         <h2>Fleet slots</h2><p className="admin-muted">Any role can be assigned to any linked slot. Presets are optional, never automatic.</p>
         {Array.from({ length: Math.min(10, agentLimit || 10) }, (_, index) => {
@@ -206,7 +206,7 @@ export function AgentConfigurationPanel({ workspaceId, agents, agentLimit, initi
       </aside>
       <section className="admin-editor" aria-label="Role and skills editor" aria-busy={loading || busy}>
         <button type="button" className="admin-button admin-mobile-back" onClick={() => setMobileEditor(false)} disabled={busy}>← All slots</button>
-        <div className="admin-editor-heading"><div><h2>{activeAgent?.display_name ?? "Choose a linked agent"}</h2><p className="admin-muted">Desired state only. Register, heartbeat and inbox contracts are unchanged.</p></div><span className="admin-sync">{loaded ? configurationSyncBadge(loaded.desired_revision, loaded.applied_revision, loaded.sync_status, loaded.sync_revision ?? 0) : "Unconfigured"}</span></div>
+        <div className="admin-editor-heading"><div className="min-w-0"><h2>{activeAgent?.display_name ?? "Choose a linked agent"}</h2><p className="admin-muted">Desired state only. Register, heartbeat and inbox contracts are unchanged.</p></div><span className="admin-sync">{loaded ? configurationSyncBadge(loaded.desired_revision, loaded.applied_revision, loaded.sync_status, loaded.sync_revision ?? 0) : "Unconfigured"}</span></div>
         {!agentId && <p className="admin-banner">Link an agent from Fleet first. Linking does not assign a role, skills or action permissions.</p>}
         {loading && <p role="status" className="admin-banner">Loading owner configuration…</p>}
         {error && <div className="admin-banner admin-warning" role="alert"><p>{error}</p>{(conflict || verificationNeeded || !loaded) && <button className="admin-button" onClick={reloadConfiguration} disabled={busy || !agentId}>Reload saved configuration</button>}</div>}

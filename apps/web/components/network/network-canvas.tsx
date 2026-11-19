@@ -251,7 +251,7 @@ export function NetworkCanvas({ agents, transfers, queuedCount, realtimeState, s
   const endpointName = (id: string) => activeAgents.find((agent) => agent.id === id)?.display_name ?? "Muse HQ";
 
   return (
-    <section className="network-panel sentinel-panel" aria-labelledby="constellation-title">
+    <section className="network-panel sentinel-panel min-w-0" aria-labelledby="constellation-title">
       <header className="network-header">
         <div className="sentinel-heading">
           <div className="network-eyebrow"><span className={`live-dot live-dot-${realtimeState.toLowerCase()}`} /> Realtime event mesh</div>
@@ -354,10 +354,10 @@ export function NetworkCanvas({ agents, transfers, queuedCount, realtimeState, s
         .sentinel-heading h2 { margin: 5px 0; letter-spacing: -.045em; }
         .sentinel-heading p { max-width: 44ch; font-size: 12px; color: #9caac0; }
         .sentinel-panel .network-telemetry { display: flex; flex-wrap: wrap; gap: 7px; min-width: 0; }
-        .sentinel-panel .network-telemetry span { border: 1px solid #27354c; border-radius: 7px; padding: 6px 8px; font-size: 10px; white-space: nowrap; background: #0b1320; }
+        .sentinel-panel .network-telemetry span { min-width: 0; max-width: 100%; overflow-wrap: anywhere; border: 1px solid #27354c; border-radius: 7px; padding: 6px 8px; font-size: 10px; white-space: normal; background: #0b1320; }
         .sentinel-camera-controls, .camera-presets, .camera-secondary { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; min-width: 0; }
         .sentinel-camera-controls { justify-content: space-between; gap: 10px; margin-bottom: 12px; }
-        .sentinel-camera-controls button { min-height: 35px; min-width: 35px; padding: 7px 10px; border: 1px solid #2a3b54; border-radius: 7px; color: #bacbe4; background: #0d1726; font: inherit; font-size: 11px; cursor: pointer; }
+        .sentinel-camera-controls button { max-width: 100%; white-space: normal; overflow-wrap: anywhere; min-height: 35px; min-width: 35px; padding: 7px 10px; border: 1px solid #2a3b54; border-radius: 7px; color: #bacbe4; background: #0d1726; font: inherit; font-size: 11px; cursor: pointer; }
         .sentinel-camera-controls button[aria-pressed="true"] { border-color: #65d5ef88; color: #b8f0ff; background: #17303e; }
         .sentinel-camera-controls button:hover:not(:disabled) { color: #f0f7ff; border-color: #69b4de; }
         .sentinel-camera-controls button:disabled { opacity: .4; cursor: default; }

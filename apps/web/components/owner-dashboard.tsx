@@ -2,7 +2,6 @@
 
 import {
   type FormEvent,
-  type ReactNode,
   useCallback,
   useEffect,
   useMemo,
@@ -24,6 +23,7 @@ import { DeveloperCredit } from "@/components/developer-credit";
 import { CommandCenterShell, type CommandView } from "@/components/dashboard/command-center-shell";
 import { OverviewView } from "@/components/dashboard/overview-view";
 import { FleetView } from "@/components/dashboard/fleet-view";
+import { Modal } from "@/components/dashboard/modal";
 import { CommsView } from "@/components/dashboard/comms-view";
 import { PipelineView } from "@/components/dashboard/pipeline-view";
 import { VaultView } from "@/components/dashboard/vault-view";
@@ -81,33 +81,6 @@ function Mark({ className = "h-6 w-6" }: { className?: string }) {
       <path d="M4.5 15c4 0 5-7.5 8.7-7.5 2.3 0 2.9 2.8 6.3 2.8" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
       <path d="M4.5 9c4 0 5 7.5 8.7 7.5 2.3 0 2.9-2.8 6.3-2.8" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
     </svg>
-  );
-}
-
-function Modal({
-  title,
-  description,
-  children,
-  onClose,
-}: {
-  title: string;
-  description: string;
-  children: ReactNode;
-  onClose: () => void;
-}) {
-  return (
-    <div className="fixed inset-0 z-50 grid place-items-center bg-black/70 px-4 py-8 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-      <div className="max-h-full w-full max-w-lg overflow-y-auto rounded-2xl border border-white/10 bg-[#0c131f] p-6 shadow-2xl shadow-black/60">
-        <div className="flex items-start justify-between gap-4">
-          <div>
-            <h2 id="modal-title" className="text-base font-semibold text-slate-50">{title}</h2>
-            <p className="mt-1 text-xs leading-5 text-slate-500">{description}</p>
-          </div>
-          <button type="button" className="icon-button" onClick={onClose} aria-label="Close modal">×</button>
-        </div>
-        <div className="mt-6">{children}</div>
-      </div>
-    </div>
   );
 }
 
@@ -523,7 +496,7 @@ export function OwnerDashboard({
           <form className="space-y-4" onSubmit={createTask}>
             <label className="field-label">Title<input className="form-input mt-2" value={taskDraft.title} onChange={(event) => setTaskDraft((draft) => ({ ...draft, title: event.target.value }))} maxLength={240} required /></label>
             <label className="field-label">Detail<textarea className="form-input mt-2 min-h-28 resize-y" value={taskDraft.detail} onChange={(event) => setTaskDraft((draft) => ({ ...draft, detail: event.target.value }))} maxLength={20000} /></label>
-            <div className="grid gap-4 sm:grid-cols-2">
+            <div className="grid min-w-0 gap-4 sm:grid-cols-2">
               <label className="field-label">Assign to<select className="form-input mt-2" value={taskDraft.assignedTo} onChange={(event) => setTaskDraft((draft) => ({ ...draft, assignedTo: event.target.value }))}><option value="">Unassigned</option>{activeAgents.map((agent) => <option key={agent.id} value={agent.id}>{agent.display_name} · {agent.role}</option>)}</select></label>
               <label className="field-label">Channel<select className="form-input mt-2" value={taskDraft.channelId} onChange={(event) => setTaskDraft((draft) => ({ ...draft, channelId: event.target.value }))}><option value="">No channel</option>{groupChannels.map((channel) => <option key={channel.id} value={channel.id}>#{channel.name}</option>)}</select></label>
             </div>
@@ -550,7 +523,7 @@ export function OwnerDashboard({
 function FileLink({ file, workspaceId, agent }: { file: HandoffFile; workspaceId: string; agent?: Agent }) {
   return (
     <a className="block rounded-xl border border-white/[0.07] bg-black/10 p-3 transition hover:border-sky-300/20 hover:bg-sky-300/[0.03]" href={`/api/owner/files/${file.id}/download?workspace_id=${workspaceId}`}>
-      <div className="flex items-start justify-between gap-3"><p className="min-w-0 truncate text-xs font-medium text-slate-300">{file.name}</p><span className="shrink-0 text-[9px] text-sky-300">Download</span></div>
+      <div className="flex min-w-0 items-start justify-between gap-3"><p className="min-w-0 truncate text-xs font-medium text-slate-300">{file.name}</p><span className="shrink-0 text-[9px] text-sky-300">Download</span></div>
       <p className="mt-1 text-[10px] text-slate-600">{formatBytes(file.size_bytes)} · {agent?.display_name ?? file.uploaded_by_type}</p>
     </a>
   );

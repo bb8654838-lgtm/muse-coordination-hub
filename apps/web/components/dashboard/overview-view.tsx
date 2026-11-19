@@ -25,10 +25,10 @@ function ActivityStream({ messages, tasks, files, agents }: Pick<OverviewViewPro
   ].sort((a, b) => Date.parse(b.at) - Date.parse(a.at)).slice(0, 8);
 
   return (
-    <section className="panel" aria-labelledby="activity-title">
-      <div className="flex items-center justify-between"><div><h2 id="activity-title" className="text-sm font-semibold text-slate-100">ActivityStream</h2><p className="mt-1 text-xs text-slate-500">Latest coordination signals</p></div><span className="count-pill">{items.length}</span></div>
+    <section className="panel min-w-0" aria-labelledby="activity-title">
+      <div className="flex min-w-0 items-center justify-between"><div><h2 id="activity-title" className="text-sm font-semibold text-slate-100">ActivityStream</h2><p className="mt-1 text-xs text-slate-500">Latest coordination signals</p></div><span className="count-pill">{items.length}</span></div>
       <div className="mt-4 space-y-2">
-        {items.map((item) => <article className="rounded-xl border border-white/[0.07] bg-black/10 p-3" key={item.id}><div className="flex items-center justify-between gap-3"><span className="text-[9px] font-semibold uppercase tracking-wider text-emerald-300">{item.kind}</span><time className="text-[9px] tabular text-slate-600">{new Date(item.at).toISOString().slice(11, 16)} UTC</time></div><p className="mt-1 line-clamp-2 text-xs leading-5 text-slate-300">{item.text}</p><p className="mt-1 text-[10px] text-slate-600">{item.actor}</p></article>)}
+        {items.map((item) => <article className="rounded-xl border border-white/[0.07] bg-black/10 p-3" key={item.id}><div className="flex min-w-0 items-center justify-between gap-3"><span className="text-[9px] font-semibold uppercase tracking-wider text-emerald-300">{item.kind}</span><time className="text-[9px] tabular text-slate-600">{new Date(item.at).toISOString().slice(11, 16)} UTC</time></div><p className="mt-1 line-clamp-2 text-xs leading-5 text-slate-300">{item.text}</p><p className="mt-1 text-[10px] text-slate-600">{item.actor}</p></article>)}
         {!items.length ? <p className="rounded-xl border border-dashed border-white/10 px-3 py-8 text-center text-xs text-slate-600">No activity yet</p> : null}
       </div>
     </section>
@@ -45,11 +45,11 @@ export function OverviewView(props: OverviewViewProps) {
     ["Vault", String(props.files.length), "Secure handoff artifacts"],
   ];
   return (
-    <div className="space-y-5" data-view="overview">
-      <section className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4" aria-label="Overview telemetry">{metrics.map(([label, value, hint]) => <article className="metric-card" key={label}><p className="text-xs text-slate-500">{label}</p><p className="mt-3 text-2xl font-semibold tracking-tight text-slate-100">{value}</p><p className="mt-1 text-[11px] text-slate-600">{hint}</p></article>)}</section>
+    <div className="space-y-5 min-w-0" data-view="overview">
+      <section className="grid min-w-0 gap-3 sm:grid-cols-2 xl:grid-cols-4" aria-label="Overview telemetry">{metrics.map(([label, value, hint]) => <article className="metric-card min-w-0" key={label}><p className="text-xs text-slate-500">{label}</p><p className="mt-3 text-2xl font-semibold tracking-tight text-slate-100">{value}</p><p className="mt-1 text-[11px] text-slate-600">{hint}</p></article>)}</section>
       <NetworkCanvas agents={props.agents} transfers={props.transfers} queuedCount={props.queuedCount} realtimeState={props.realtimeState} selectedAgentId={props.selectedAgentId} onSelectAgent={props.onSelectAgent} onPreview={props.onPreview} />
-      <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_360px]">
-        <section className="panel"><div className="flex items-start justify-between"><div><h2 className="text-sm font-semibold text-slate-100">Needs attention</h2><p className="mt-1 text-xs text-slate-500">Work waiting on an acknowledgement or decision</p></div><span className="count-pill">{attention.length}</span></div><div className="mt-4 grid gap-2 sm:grid-cols-2">{attention.slice(0, 8).map((task) => <article className="task-card" key={task.id}><span className="text-[9px] font-semibold text-amber-300">{task.status}</span><p className="mt-1 text-xs font-medium text-slate-200">{task.title}</p>{task.blocked_reason ? <p className="mt-1 text-[10px] text-rose-300/80">{task.blocked_reason}</p> : null}</article>)}{!attention.length ? <p className="text-xs text-slate-600">All clear.</p> : null}</div></section>
+      <div className="grid min-w-0 gap-5 xl:grid-cols-[minmax(0,1fr)_minmax(0,360px)]">
+        <section className="panel min-w-0"><div className="flex min-w-0 items-start justify-between"><div><h2 className="text-sm font-semibold text-slate-100">Needs attention</h2><p className="mt-1 text-xs text-slate-500">Work waiting on an acknowledgement or decision</p></div><span className="count-pill">{attention.length}</span></div><div className="mt-4 grid gap-2 sm:grid-cols-2">{attention.slice(0, 8).map((task) => <article className="task-card min-w-0" key={task.id}><span className="text-[9px] font-semibold text-amber-300">{task.status}</span><p className="mt-1 text-xs font-medium text-slate-200">{task.title}</p>{task.blocked_reason ? <p className="mt-1 text-[10px] text-rose-300/80">{task.blocked_reason}</p> : null}</article>)}{!attention.length ? <p className="text-xs text-slate-600">All clear.</p> : null}</div></section>
         <ActivityStream messages={props.messages} tasks={props.tasks} files={props.files} agents={props.agents} />
       </div>
     </div>

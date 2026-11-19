@@ -60,7 +60,7 @@ export function CommandCenterShell({
   const active = NAV.find((item) => item.id === activeView) ?? NAV[0];
 
   return (
-    <main className="command-center min-h-screen bg-dot-grid lg:grid lg:grid-cols-[228px_minmax(0,1fr)]">
+    <main className="command-center min-h-screen min-w-0 w-full bg-dot-grid lg:grid lg:grid-cols-[minmax(0,228px)_minmax(0,1fr)]">
       <aside className="command-rail hidden min-h-screen border-r border-white/[0.07] bg-[#060a11]/90 px-3 py-4 backdrop-blur-xl lg:sticky lg:top-0 lg:flex lg:h-screen lg:flex-col">
         <div className="flex items-center gap-3 px-2 py-2">
           <MuseMark active className="h-11 w-11 shrink-0" label="Muse coordination core" />
@@ -94,29 +94,31 @@ export function CommandCenterShell({
         </div>
       </aside>
 
-      <section className="min-w-0 pb-24 lg:pb-0">
+      <section className="command-workspace min-w-0">
         <header className="telemetry-hud sticky top-0 z-40 border-b border-white/[0.07] bg-[#060a11]/88 px-4 py-3 backdrop-blur-xl sm:px-6">
-          <div className="mx-auto flex max-w-[1720px] items-center gap-4">
-            <div className="flex min-w-0 flex-1 items-center gap-3">
+          <div className="command-header-inner flex min-w-0 w-full flex-wrap items-center gap-3">
+            <div className="command-header-title flex min-w-0 flex-1 items-center gap-3">
               <MuseMark active className="h-9 w-9 shrink-0 lg:hidden" label="Muse" />
-              <div className="min-w-0"><h1 className="truncate text-sm font-semibold text-slate-100">{active.label}</h1><p className="truncate text-[11px] text-slate-500">{active.hint} · {workspaceName}</p></div>
+              <div className="min-w-0"><h1 className="text-sm font-semibold text-slate-100">{active.label}</h1><p className="text-[11px] text-slate-500">{active.hint} · {workspaceName}</p></div>
             </div>
-            <div className="hidden items-center gap-2 xl:flex" aria-label="Live telemetry HUD">
+            <div className="min-w-0 hidden flex-wrap items-center gap-2 xl:flex" aria-label="Live telemetry HUD">
               <span className="hud-chip"><i className="bg-emerald-300" />{onlineCount} online</span>
               <span className="hud-chip"><i className="bg-amber-300" />{pendingCount} pending</span>
               <span className="hud-chip"><i className="bg-sky-300" />{activeTaskCount} active</span>
               <span className="hud-chip"><i className="bg-violet-300" />{queuedTransfers} queued</span>
               <span className="hud-chip tabular">heartbeat {latestHeartbeat}</span>
             </div>
-            <Link aria-label="Manage roles and skills" className="secondary-button" href="/admin">Admin</Link>
-            <button aria-label="Account settings" className="secondary-button hidden sm:block" onClick={onAccount} type="button">Account</button>
-            <button className="primary-button whitespace-nowrap" onClick={onInvite} type="button">Invite agent</button>
+            <div className="command-header-actions flex min-w-0 flex-wrap items-center gap-2">
+              <Link aria-label="Manage roles and skills" className="secondary-button" href="/admin">Admin</Link>
+              <button aria-label="Account settings" className="secondary-button" onClick={onAccount} type="button">Account</button>
+              <button className="primary-button" onClick={onInvite} type="button">Invite agent</button>
+            </div>
           </div>
         </header>
 
-        <div className="mx-auto max-w-[1720px] p-4 sm:p-6">
+        <div className="command-content min-w-0 w-full p-4 sm:p-6">
           {notice ? (
-            <div aria-live="polite" className="mb-4 flex items-center justify-between gap-4 rounded-xl border border-emerald-300/15 bg-emerald-300/[0.06] px-4 py-3 text-xs text-emerald-100">
+            <div aria-live="polite" className="mb-4 flex min-w-0 flex-wrap items-center justify-between gap-3 rounded-xl border border-emerald-300/15 bg-emerald-300/[0.06] px-4 py-3 text-xs text-emerald-100">
               <span>{notice}</span><button className="text-emerald-300/75 hover:text-emerald-200" onClick={onDismissNotice} type="button">Dismiss</button>
             </div>
           ) : null}
@@ -125,7 +127,7 @@ export function CommandCenterShell({
         </div>
       </section>
 
-      <nav aria-label="Mobile command center categories" className="mobile-command-bar lg:hidden">
+      <nav aria-label="Mobile command center categories" className="mobile-command-bar">
         {NAV.map((item) => (
           <button aria-current={activeView === item.id ? "page" : undefined} className={activeView === item.id ? "mobile-command-active" : ""} key={item.id} onClick={() => onViewChange(item.id)} type="button">
             <span aria-hidden="true">{item.glyph}</span><small>{item.label}</small>

@@ -12,7 +12,8 @@
     "build": "npm run build --workspace @muse/web",
     "typecheck": "npm run typecheck --workspace @muse/web",
     "validate:schema": "python3 scripts/validate_schema.py",
-    "test": "npm run validate:schema && python3 -m unittest discover -s tests -p 'test_*.py' && node tests/skill_configuration_behavior.cjs && node tests/owner_configuration_behavior.cjs && node tests/bridge_configuration_behavior.cjs && node tests/agent_configuration_behavior.cjs && node tests/agent_configuration_database.cjs && npm run check --workspace @muse/bridge",
+    "test:ui-responsive": "node tests/ui-responsive-layout.cjs",
+    "test": "npm run validate:schema && python3 -m unittest discover -s tests -p 'test_*.py' && node tests/skill_configuration_behavior.cjs && node tests/owner_configuration_behavior.cjs && node tests/bridge_configuration_behavior.cjs && node tests/agent_configuration_behavior.cjs && node tests/agent_configuration_database.cjs && npm run check --workspace @muse/bridge && npm run test:ui-responsive",
     "check": "npm run validate:schema && npm run typecheck && npm run check --workspace @muse/bridge"
   },
   "engines": {
