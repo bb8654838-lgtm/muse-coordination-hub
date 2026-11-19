@@ -1,0 +1,32 @@
+{
+  "kind": "composite",
+  "source_ids": [
+    "claude-skills",
+    "superpowers"
+  ],
+  "skill_ids": [
+    "writing-plans",
+    "executing-plans",
+    "dispatching-parallel-agents",
+    "scrum-master",
+    "team-composition",
+    "muse-task-triage",
+    "muse-sop-writing"
+  ],
+  "sources": [
+    {
+      "id": "claude-skills",
+      "repository": "alirezarezvani/claude-skills",
+      "commit": "f8593c4941210a621a6629ce1da9e07897976d5f",
+      "license": "MIT",
+      "license_sha256": "a20126646f93d32a8989c3cf4772d59194f405034f7babe7daebeac22b8ab151"
+    },
+    {
+      "id": "superpowers",
+      "repository": "obra/superpowers",
+      "commit": "22f0b463e7a5e579904dd6211a520321035526f7",
+      "license": "MIT",
+      "license_sha256": "a37e0e9697144819e1d965176ac4ae5bc3fa02d11e7812036bbcadf6dafe2400"
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "name": "@muse/skills",
+  "version": "1.0.0",
+  "private": true,
+  "license": "MIT",
+  "exports": { ".": "./src/index.ts", "./server": "./src/server.ts" }
+}

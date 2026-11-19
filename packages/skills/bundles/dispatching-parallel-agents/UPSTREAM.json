@@ -1,0 +1,14 @@
+{
+  "kind": "adapted",
+  "source_ids": [
+    "superpowers"
+  ],
+  "license": "MIT",
+  "repository": "obra/superpowers",
+  "commit": "22f0b463e7a5e579904dd6211a520321035526f7",
+  "path": "skills/dispatching-parallel-agents/SKILL.md",
+  "sha256": "1968923066f3b707eb01d1992cdf4c42284c3855f70253b9cd5000ff45fca13c",
+  "license_path": "LICENSE",
+  "license_sha256": "a37e0e9697144819e1d965176ac4ae5bc3fa02d11e7812036bbcadf6dafe2400",
+  "reference_path": "bundles/dispatching-parallel-agents/references/upstream.md"
+}

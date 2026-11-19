@@ -150,6 +150,7 @@ class CommandCenterContractTests(unittest.TestCase):
         self.assertEqual(
             dependencies,
             {
+                "@muse/skills": "1.0.0",  # Stage A internal metadata registry; external dependency pins stay unchanged.
                 "@supabase/ssr": "^0.12.7",
                 "@supabase/supabase-js": "2.119.1",
                 "next": "16.4.6",

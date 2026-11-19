@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import type { ReactNode } from "react";
 
 import { DeveloperCredit } from "@/components/developer-credit";
@@ -107,6 +108,7 @@ export function CommandCenterShell({
               <span className="hud-chip"><i className="bg-violet-300" />{queuedTransfers} queued</span>
               <span className="hud-chip tabular">heartbeat {latestHeartbeat}</span>
             </div>
+            <Link aria-label="Manage roles and skills" className="secondary-button" href="/admin">Admin</Link>
             <button aria-label="Account settings" className="secondary-button hidden sm:block" onClick={onAccount} type="button">Account</button>
             <button className="primary-button whitespace-nowrap" onClick={onInvite} type="button">Invite agent</button>
           </div>

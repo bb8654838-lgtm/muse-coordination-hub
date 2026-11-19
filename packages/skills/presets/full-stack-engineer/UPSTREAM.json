@@ -1,0 +1,33 @@
+{
+  "kind": "composite",
+  "source_ids": [
+    "ecc",
+    "superpowers"
+  ],
+  "skill_ids": [
+    "ecc-coding-standards",
+    "ecc-python-patterns",
+    "ecc-security-review",
+    "ecc-verification-loop",
+    "test-driven-development",
+    "systematic-debugging",
+    "requesting-code-review",
+    "verification-before-completion"
+  ],
+  "sources": [
+    {
+      "id": "ecc",
+      "repository": "affaan-m/ECC",
+      "commit": "3f14a103a8694e51c1df9a806217a6d0b5f7a6f7",
+      "license": "MIT",
+      "license_sha256": "326146379f01bb137c0a5d3c54770c1aa31076705c8b88a7f6b26a460f6221b2"
+    },
+    {
+      "id": "superpowers",
+      "repository": "obra/superpowers",
+      "commit": "22f0b463e7a5e579904dd6211a520321035526f7",
+      "license": "MIT",
+      "license_sha256": "a37e0e9697144819e1d965176ac4ae5bc3fa02d11e7812036bbcadf6dafe2400"
+    }
+  ]
+}

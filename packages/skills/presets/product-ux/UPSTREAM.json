@@ -1,0 +1,20 @@
+{
+  "kind": "composite",
+  "source_ids": [
+    "claude-skills"
+  ],
+  "skill_ids": [
+    "product-manager-toolkit",
+    "ux-researcher-designer",
+    "muse-product-ux-ops"
+  ],
+  "sources": [
+    {
+      "id": "claude-skills",
+      "repository": "alirezarezvani/claude-skills",
+      "commit": "f8593c4941210a621a6629ce1da9e07897976d5f",
+      "license": "MIT",
+      "license_sha256": "a20126646f93d32a8989c3cf4772d59194f405034f7babe7daebeac22b8ab151"
+    }
+  ]
+}

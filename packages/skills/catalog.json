@@ -1,0 +1,833 @@
+{
+  "schema_version": 1,
+  "presets": [
+    {
+      "id": "sales-growth",
+      "name": "Sales & Growth",
+      "description": "Positioning, proof-backed copy, pricing hypotheses and responsible channel experiments.",
+      "version": "1.0.0",
+      "optional": true,
+      "skill_ids": [
+        "copywriting",
+        "pricing-strategy",
+        "launch-strategy",
+        "marketing-ideas",
+        "paid-ads",
+        "social-content"
+      ],
+      "optional_skill_ids": [],
+      "path": "presets/sales-growth/SKILL.md",
+      "sha256": "92be0ec1031ef085ba893b058201be5ff46a6bec14c212f70abf9d9731aa267a",
+      "estimated_tokens": 559
+    },
+    {
+      "id": "full-stack-engineer",
+      "name": "Full-stack Engineer",
+      "description": "Maintainable implementation, debugging, test-first changes and fresh verification.",
+      "version": "1.0.0",
+      "optional": true,
+      "skill_ids": [
+        "ecc-coding-standards",
+        "ecc-python-patterns",
+        "ecc-security-review",
+        "ecc-verification-loop",
+        "test-driven-development",
+        "systematic-debugging",
+        "requesting-code-review",
+        "verification-before-completion"
+      ],
+      "optional_skill_ids": [],
+      "path": "presets/full-stack-engineer/SKILL.md",
+      "sha256": "622bdae9480435ea4190efef87621cffa4475f9269aa899dbab636377161a4bc",
+      "estimated_tokens": 690
+    },
+    {
+      "id": "content-media",
+      "name": "Content & Media",
+      "description": "Editorial strategy, natural writing, platform content and portable production briefs.",
+      "version": "1.0.0",
+      "optional": true,
+      "skill_ids": [
+        "content-strategy",
+        "social-content",
+        "seo-audit",
+        "humanizer",
+        "muse-video-briefs",
+        "muse-thumbnail-briefs"
+      ],
+      "optional_skill_ids": [],
+      "path": "presets/content-media/SKILL.md",
+      "sha256": "0a4e4463b0cb41584470a953b998650104d6018cd50e7c9a836355588ab49bc4",
+      "estimated_tokens": 573
+    },
+    {
+      "id": "research-qa",
+      "name": "Research & QA",
+      "description": "Cited multi-source investigation, careful quality review and evidence-based completion.",
+      "version": "1.0.0",
+      "optional": true,
+      "skill_ids": [
+        "muse-multi-source-research",
+        "systematic-debugging",
+        "ecc-verification-before-completion",
+        "ecc-security-review"
+      ],
+      "optional_skill_ids": [
+        "webapp-testing"
+      ],
+      "path": "presets/research-qa/SKILL.md",
+      "sha256": "b1f775c024364f806e565b8c9086653c1366f36b8d7117dd6e64eec7db29e65c",
+      "estimated_tokens": 498
+    },
+    {
+      "id": "operations-coordinator",
+      "name": "Operations Coordinator",
+      "description": "Plans, task triage, independent workstreams and auditable operational procedures.",
+      "version": "1.0.0",
+      "optional": true,
+      "skill_ids": [
+        "writing-plans",
+        "executing-plans",
+        "dispatching-parallel-agents",
+        "scrum-master",
+        "team-composition",
+        "muse-task-triage",
+        "muse-sop-writing"
+      ],
+      "optional_skill_ids": [],
+      "path": "presets/operations-coordinator/SKILL.md",
+      "sha256": "d54b083c09de08acbf5bd83ecac8140389355303e40a4b78cadce1e1a4200257",
+      "estimated_tokens": 629
+    },
+    {
+      "id": "product-ux",
+      "name": "Product & UX",
+      "description": "Customer evidence, focused product requirements, accessible journeys and validation plans.",
+      "version": "1.0.0",
+      "optional": true,
+      "skill_ids": [
+        "product-manager-toolkit",
+        "ux-researcher-designer",
+        "muse-product-ux-ops"
+      ],
+      "optional_skill_ids": [],
+      "path": "presets/product-ux/SKILL.md",
+      "sha256": "1a025338859c511e21f0d3bd155a1c604d5f3e93fc9aa7307c718e2cedff8253",
+      "estimated_tokens": 420
+    },
+    {
+      "id": "security-privacy",
+      "name": "Security & Privacy",
+      "description": "Authorized security review, threat and privacy triage with reproducible remediation evidence.",
+      "version": "1.0.0",
+      "optional": true,
+      "skill_ids": [
+        "ecc-security-review",
+        "muse-security-triage"
+      ],
+      "optional_skill_ids": [],
+      "path": "presets/security-privacy/SKILL.md",
+      "sha256": "35c9b4045f56e6583d207f9619f1103ec1e8b9447ece8f789ca97f1a19ce4891",
+      "estimated_tokens": 375
+    },
+    {
+      "id": "data-insights",
+      "name": "Data Insights",
+      "description": "Reproducible product metrics, data quality, cohorts and uncertainty-aware reporting.",
+      "version": "1.0.0",
+      "optional": true,
+      "skill_ids": [
+        "product-analytics",
+        "muse-data-analysis"
+      ],
+      "optional_skill_ids": [],
+      "path": "presets/data-insights/SKILL.md",
+      "sha256": "b8d1db788afde331e63a40c96deee91f1fd62940ef2d62dbc2731622a45a728d",
+      "estimated_tokens": 366
+    },
+    {
+      "id": "customer-success",
+      "name": "Customer Success",
+      "description": "Evidence-based onboarding, adoption support, reusable answers and careful escalation.",
+      "version": "1.0.0",
+      "optional": true,
+      "skill_ids": [
+        "customer-success-manager",
+        "support-knowledge-base",
+        "muse-support-ops"
+      ],
+      "optional_skill_ids": [],
+      "path": "presets/customer-success/SKILL.md",
+      "sha256": "bca284876435800a6605a7152005cdc94a7b474eec688dc52d9377c87d1d28b1",
+      "estimated_tokens": 412
+    },
+    {
+      "id": "finance-planning",
+      "name": "Finance & Planning",
+      "description": "Explicit-assumption financial analysis, budgets, cash-flow scenarios and variance review.",
+      "version": "1.0.0",
+      "optional": true,
+      "skill_ids": [
+        "financial-analyst",
+        "muse-finance-planning"
+      ],
+      "optional_skill_ids": [],
+      "path": "presets/finance-planning/SKILL.md",
+      "sha256": "cbe940fa075231050040fa00bcb1b6e549bb6aa84f4e77bf6b249d64062910ec",
+      "estimated_tokens": 377
+    }
+  ],
+  "skills": [
+    {
+      "id": "copywriting",
+      "name": "Copywriting",
+      "description": "Clarify audience, desired action and product evidence; draft a specific promise, supporting proof and a single call to action; revise for clarity and verify every claim.",
+      "version": "1.0.0",
+      "kind": "adapted",
+      "path": "bundles/copywriting/SKILL.md",
+      "sha256": "e7f2b5bbfb3ff471aff1c22d9516cc9b40b1fd04a96dff12c253ee92c70f04a7",
+      "license": "MIT",
+      "source_ids": [
+        "marketingskills"
+      ],
+      "permission_hints": [],
+      "estimated_tokens": 511
+    },
+    {
+      "id": "pricing-strategy",
+      "name": "Pricing strategy",
+      "description": "Identify segments, alternatives and value metrics; compare packaging hypotheses and willingness-to-pay evidence; propose reversible pricing experiments with measurable guardrails.",
+      "version": "1.0.0",
+      "kind": "adapted",
+      "path": "bundles/pricing-strategy/SKILL.md",
+      "sha256": "7a1834537064e06f0845720a6cef5bf27062228ed88bf1b1dea6ecca2f889e0d",
+      "license": "MIT",
+      "source_ids": [
+        "marketingskills"
+      ],
+      "permission_hints": [],
+      "estimated_tokens": 516
+    },
+    {
+      "id": "launch-strategy",
+      "name": "Launch strategy",
+      "description": "Define the launch audience and readiness criteria; sequence owned, partner and community channels; prepare proof-backed materials, responsible owners and post-launch measurements.",
+      "version": "1.0.0",
+      "kind": "adapted",
+      "path": "bundles/launch-strategy/SKILL.md",
+      "sha256": "78b2c31b929e0c4d97d4f03a364fa450f50bcae00f425477198e9339fdaea679",
+      "license": "MIT",
+      "source_ids": [
+        "marketingskills"
+      ],
+      "permission_hints": [],
+      "estimated_tokens": 516
+    },
+    {
+      "id": "marketing-ideas",
+      "name": "Marketing experiments",
+      "description": "Generate channel-specific hypotheses grounded in customer needs; rank by effort, evidence and expected learning; design small experiments with budgets, owners and stop conditions.",
+      "version": "1.0.0",
+      "kind": "adapted",
+      "path": "bundles/marketing-ideas/SKILL.md",
+      "sha256": "93c4e1ce0d65bf255b594f2855db64cd6607d9c0540fd902574c6fa7e9888335",
+      "license": "MIT",
+      "source_ids": [
+        "marketingskills"
+      ],
+      "permission_hints": [],
+      "estimated_tokens": 523
+    },
+    {
+      "id": "paid-ads",
+      "name": "Paid advertising planning",
+      "description": "Establish objectives, audience, permitted claims and budget limits; plan creative and attribution checks; compare experiments without launching campaigns or spending funds.",
+      "version": "1.0.0",
+      "kind": "adapted",
+      "path": "bundles/paid-ads/SKILL.md",
+      "sha256": "64c76fce579bd7fac4742c8531118690e44bb8de5d0340403e33f0121a43a9d0",
+      "license": "MIT",
+      "source_ids": [
+        "marketingskills"
+      ],
+      "permission_hints": [
+        "external_send",
+        "financial_action"
+      ],
+      "estimated_tokens": 516
+    },
+    {
+      "id": "social-content",
+      "name": "Social content",
+      "description": "Map audience questions to platform-appropriate content; draft a coherent editorial series with original supporting material; review factual claims and publication permissions.",
+      "version": "1.0.0",
+      "kind": "adapted",
+      "path": "bundles/social-content/SKILL.md",
+      "sha256": "7b57e03074aa462bc24d4e0c80fb94b8a321f31084c68995d370bd42742977fb",
+      "license": "MIT",
+      "source_ids": [
+        "marketingskills"
+      ],
+      "permission_hints": [
+        "external_send"
+      ],
+      "estimated_tokens": 514
+    },
+    {
+      "id": "content-strategy",
+      "name": "Content strategy",
+      "description": "Inventory audience needs and existing material; choose topics by relevance, evidence and business intent; define briefs, ownership, distribution and content-quality review.",
+      "version": "1.0.0",
+      "kind": "adapted",
+      "path": "bundles/content-strategy/SKILL.md",
+      "sha256": "26881be410b78a7869efe096169517d63c8f5813939e0de7797c52e34953ce0a",
+      "license": "MIT",
+      "source_ids": [
+        "marketingskills"
+      ],
+      "permission_hints": [],
+      "estimated_tokens": 514
+    },
+    {
+      "id": "seo-audit",
+      "name": "SEO audit",
+      "description": "Check authorized crawlability, indexability, information architecture and page intent; separate technical observations from ranking hypotheses; prioritize fixes with reproducible evidence.",
+      "version": "1.0.0",
+      "kind": "adapted",
+      "path": "bundles/seo-audit/SKILL.md",
+      "sha256": "f94d417ad6722b941c627cd221145c8ff73b29045a40f5dee6b5a82834899c12",
+      "license": "MIT",
+      "source_ids": [
+        "marketingskills"
+      ],
+      "permission_hints": [
+        "network_read"
+      ],
+      "estimated_tokens": 527
+    },
+    {
+      "id": "humanizer",
+      "name": "Editorial voice",
+      "description": "Replace vague abstractions, promotional filler and repetitive transitions with precise language; retain meaning, citations and the author's intended voice; never fabricate experience or authorship.",
+      "version": "1.0.0",
+      "kind": "adapted",
+      "path": "bundles/humanizer/SKILL.md",
+      "sha256": "112d8e6bd8bbcab667774aa75fe35534b6abb712be2318a4de9dcb0366eef963",
+      "license": "MIT",
+      "source_ids": [
+        "humanizer"
+      ],
+      "permission_hints": [],
+      "estimated_tokens": 528
+    },
+    {
+      "id": "ecc-coding-standards",
+      "name": "Coding standards",
+      "description": "Inspect the project's existing conventions; favor readable types, bounded error handling and minimal diffs; review input validation, tests and maintenance costs before changing code.",
+      "version": "1.0.0",
+      "kind": "adapted",
+      "path": "bundles/ecc-coding-standards/SKILL.md",
+      "sha256": "faa41f1b626c20927913ace652e35d052295c19f66e46bc93f156a38cd71c83e",
+      "license": "MIT",
+      "source_ids": [
+        "ecc"
+      ],
+      "permission_hints": [
+        "file_read",
+        "file_write"
+      ],
+      "estimated_tokens": 515
+    },
+    {
+      "id": "ecc-python-patterns",
+      "name": "Python patterns",
+      "description": "Select idiomatic data structures, type annotations and context-managed resources; isolate side effects, validate inputs and test failure paths; follow the repository's supported Python versions.",
+      "version": "1.0.0",
+      "kind": "adapted",
+      "path": "bundles/ecc-python-patterns/SKILL.md",
+      "sha256": "b8357d4c4b702d023efe36622fe2d64b2696fcb1a6ea946e4a64ae4be402b76c",
+      "license": "MIT",
+      "source_ids": [
+        "ecc"
+      ],
+      "permission_hints": [
+        "file_read",
+        "file_write",
+        "code_execute"
+      ],
+      "estimated_tokens": 530
+    },
+    {
+      "id": "ecc-security-review",
+      "name": "Security review",
+      "description": "Confirm authorized scope and trust boundaries; examine authentication, authorization, secrets handling and untrusted input; reproduce findings safely and rank remediation by verified impact.",
+      "version": "1.0.0",
+      "kind": "adapted",
+      "path": "bundles/ecc-security-review/SKILL.md",
+      "sha256": "7c312b33549e407a7a207b0b3a1f93d6e370356ef62a068337b6ab70fda18b60",
+      "license": "MIT",
+      "source_ids": [
+        "ecc"
+      ],
+      "permission_hints": [
+        "file_read",
+        "network_read"
+      ],
+      "estimated_tokens": 519
+    },
+    {
+      "id": "ecc-verification-loop",
+      "name": "Verification loop",
+      "description": "Run the project's build, type, lint and test checks only when execution is permitted; capture actual failures, apply surgical fixes and re-run affected checks; report unexecuted checks honestly.",
+      "version": "1.0.0",
+      "kind": "adapted",
+      "path": "bundles/ecc-verification-loop/SKILL.md",
+      "sha256": "58af30c0d3d4dd60560061b5af1bd3ec67e1961604069ca891aeec2d309164cb",
+      "license": "MIT",
+      "source_ids": [
+        "ecc"
+      ],
+      "permission_hints": [
+        "code_execute"
+      ],
+      "estimated_tokens": 532
+    },
+    {
+      "id": "ecc-verification-before-completion",
+      "name": "Completion evidence",
+      "description": "Define acceptance criteria before claiming completion; collect fresh evidence for each criterion and record limitations; distinguish successful execution from plans and assumptions.",
+      "version": "1.0.0",
+      "kind": "adapted",
+      "path": "bundles/ecc-verification-before-completion/SKILL.md",
+      "sha256": "ab8e2880c0828a77d023092d9fe174d7d0932d181dccd31009b5081d9cf89ba6",
+      "license": "MIT",
+      "source_ids": [
+        "ecc"
+      ],
+      "permission_hints": [
+        "code_execute"
+      ],
+      "estimated_tokens": 522
+    },
+    {
+      "id": "muse-multi-source-research",
+      "name": "Multi-source research",
+      "description": "Form a bounded research question; compare independent primary and secondary sources, record provenance and contradictions, and present findings with citations, confidence and unresolved gaps.",
+      "version": "1.0.0",
+      "kind": "adapted",
+      "path": "bundles/muse-multi-source-research/SKILL.md",
+      "sha256": "05910c01700a9f2aab2cb5dcd265b2113d945e5eaa06a59a07aad76213ff1eaa",
+      "license": "MIT",
+      "source_ids": [
+        "ecc"
+      ],
+      "permission_hints": [
+        "network_read"
+      ],
+      "estimated_tokens": 519
+    },
+    {
+      "id": "test-driven-development",
+      "name": "Test-driven development",
+      "description": "Express the intended behavior in a failing test; verify the failure is meaningful, implement the smallest correct change and re-run the test; refactor only while the relevant suite stays green.",
+      "version": "1.0.0",
+      "kind": "adapted",
+      "path": "bundles/test-driven-development/SKILL.md",
+      "sha256": "17f67e1aff947d0e2f77f08caed7e71b073b792ad5cc87ee8910389946d4c38c",
+      "license": "MIT",
+      "source_ids": [
+        "superpowers"
+      ],
+      "permission_hints": [
+        "file_write",
+        "code_execute"
+      ],
+      "estimated_tokens": 527
+    },
+    {
+      "id": "systematic-debugging",
+      "name": "Systematic debugging",
+      "description": "Reproduce the defect and collect boundary evidence before proposing a fix; test one causal hypothesis at a time, isolate the root cause and verify the change against a regression test.",
+      "version": "1.0.0",
+      "kind": "adapted",
+      "path": "bundles/systematic-debugging/SKILL.md",
+      "sha256": "d0c40562c6912e9bea4a2774b72a8066db12d510df7105255cbb411251559b53",
+      "license": "MIT",
+      "source_ids": [
+        "superpowers"
+      ],
+      "permission_hints": [
+        "file_read",
+        "code_execute"
+      ],
+      "estimated_tokens": 527
+    },
+    {
+      "id": "requesting-code-review",
+      "name": "Code review preparation",
+      "description": "Summarize the problem, minimal diff and real verification output; inspect correctness, security and maintenance risks; request focused human review without claiming approval that was not received.",
+      "version": "1.0.0",
+      "kind": "adapted",
+      "path": "bundles/requesting-code-review/SKILL.md",
+      "sha256": "a6c4b649bc43bb40a402961815aeb91e927a3d721392f25747f5fff7cc7e5f3e",
+      "license": "MIT",
+      "source_ids": [
+        "superpowers"
+      ],
+      "permission_hints": [
+        "file_read"
+      ],
+      "estimated_tokens": 532
+    },
+    {
+      "id": "verification-before-completion",
+      "name": "Fresh verification",
+      "description": "Require fresh build and test evidence for completion claims; inspect exit statuses and expected artifacts; label skipped, blocked and partial checks rather than treating them as passes.",
+      "version": "1.0.0",
+      "kind": "adapted",
+      "path": "bundles/verification-before-completion/SKILL.md",
+      "sha256": "b8e66d74334b20b9e05dce402a2d88438564a53e699e5b1ecafe5d169c0b3020",
+      "license": "MIT",
+      "source_ids": [
+        "superpowers"
+      ],
+      "permission_hints": [
+        "code_execute"
+      ],
+      "estimated_tokens": 528
+    },
+    {
+      "id": "writing-plans",
+      "name": "Implementation planning",
+      "description": "Translate requirements into small, testable steps with file boundaries, dependencies, validation commands and rollback considerations; keep approval-sensitive actions explicit.",
+      "version": "1.0.0",
+      "kind": "adapted",
+      "path": "bundles/writing-plans/SKILL.md",
+      "sha256": "a53a565bf517cf8ee577ebd3afd462cdedefa2653040f313d4ebcc340ee81979",
+      "license": "MIT",
+      "source_ids": [
+        "superpowers"
+      ],
+      "permission_hints": [],
+      "estimated_tokens": 535
+    },
+    {
+      "id": "executing-plans",
+      "name": "Plan execution",
+      "description": "Review the approved plan and prerequisites; perform bounded steps with checkpoints and evidence; stop on ambiguous scope or failed safety gates rather than silently expanding the work.",
+      "version": "1.0.0",
+      "kind": "adapted",
+      "path": "bundles/executing-plans/SKILL.md",
+      "sha256": "88a1c1691a4b4f5e91a3021df2711009b0aed241795e12816091119035a046c1",
+      "license": "MIT",
+      "source_ids": [
+        "superpowers"
+      ],
+      "permission_hints": [
+        "file_write",
+        "code_execute"
+      ],
+      "estimated_tokens": 515
+    },
+    {
+      "id": "dispatching-parallel-agents",
+      "name": "Independent workstreams",
+      "description": "Partition truly independent questions with explicit context, scope and expected evidence; delegate only when permission and runtime capability exist; verify returned findings before integration.",
+      "version": "1.0.0",
+      "kind": "adapted",
+      "path": "bundles/dispatching-parallel-agents/SKILL.md",
+      "sha256": "f51e56af7ffc39f0f9e5ec4bd1486a1143ecc25d675894798ab83176255a63dc",
+      "license": "MIT",
+      "source_ids": [
+        "superpowers"
+      ],
+      "permission_hints": [
+        "delegate"
+      ],
+      "estimated_tokens": 540
+    },
+    {
+      "id": "scrum-master",
+      "name": "Delivery coordination",
+      "description": "Make goals, owners, dependencies and acceptance criteria visible; identify blocked work and facilitate a short feedback loop; use observed delivery evidence rather than invented velocity.",
+      "version": "1.0.0",
+      "kind": "adapted",
+      "path": "bundles/scrum-master/SKILL.md",
+      "sha256": "cc08ac3ab36b4570256f04d06a37c50a1aafb801d1234b218455ca5b768306cd",
+      "license": "MIT",
+      "source_ids": [
+        "claude-skills"
+      ],
+      "permission_hints": [],
+      "estimated_tokens": 530
+    },
+    {
+      "id": "team-composition",
+      "name": "Team composition",
+      "description": "Assess skills needed for the work and actual availability; propose complementary responsibilities and explicit handoffs; avoid assumptions about named individuals or slot-specific occupations.",
+      "version": "1.0.0",
+      "kind": "adapted",
+      "path": "bundles/team-composition/SKILL.md",
+      "sha256": "328a1b3a0228931e14b69f64943deb758dbe5f3c593e72c2c9faf001415adf35",
+      "license": "MIT",
+      "source_ids": [
+        "claude-skills"
+      ],
+      "permission_hints": [],
+      "estimated_tokens": 532
+    },
+    {
+      "id": "product-manager-toolkit",
+      "name": "Product management",
+      "description": "Synthesize customer evidence, product constraints and alternatives; prioritize hypotheses with transparent criteria; write concise requirements, acceptance criteria and experiment plans.",
+      "version": "1.0.0",
+      "kind": "adapted",
+      "path": "bundles/product-manager-toolkit/SKILL.md",
+      "sha256": "d36d649f56dde0c30cc075231a23e6d4603620b6636d46c235c466207362d09f",
+      "license": "MIT",
+      "source_ids": [
+        "claude-skills"
+      ],
+      "permission_hints": [],
+      "estimated_tokens": 533
+    },
+    {
+      "id": "ux-researcher-designer",
+      "name": "UX research and design",
+      "description": "Define research questions, consent and accessible tasks; synthesize observations into journeys and testable design hypotheses; separate participant evidence from inferred personas.",
+      "version": "1.0.0",
+      "kind": "adapted",
+      "path": "bundles/ux-researcher-designer/SKILL.md",
+      "sha256": "912300015cbbcd29d5d27a59629aa11894a977f0df27c4b7bbb482d33ee341d9",
+      "license": "MIT",
+      "source_ids": [
+        "claude-skills"
+      ],
+      "permission_hints": [],
+      "estimated_tokens": 528
+    },
+    {
+      "id": "product-analytics",
+      "name": "Product analytics",
+      "description": "Define metric semantics, denominators and event quality; inspect funnels, cohorts and uncertainty; explain reproducible results and limitations without unsupported causal claims.",
+      "version": "1.0.0",
+      "kind": "adapted",
+      "path": "bundles/product-analytics/SKILL.md",
+      "sha256": "82c2d63c6f21a058be49651605f6a93db9a3b150334c42e2030c2c3158d3cfbe",
+      "license": "MIT",
+      "source_ids": [
+        "claude-skills"
+      ],
+      "permission_hints": [
+        "file_read"
+      ],
+      "estimated_tokens": 523
+    },
+    {
+      "id": "customer-success-manager",
+      "name": "Customer success",
+      "description": "Document onboarding goals, adoption evidence and customer risks; plan useful check-ins and escalation paths; protect customer data and avoid unsupported commitments.",
+      "version": "1.0.0",
+      "kind": "adapted",
+      "path": "bundles/customer-success-manager/SKILL.md",
+      "sha256": "8556bde1f1ad1aabc4db33b5003e1361196247f09097fb9011b3c1f3f4eba54e",
+      "license": "MIT",
+      "source_ids": [
+        "claude-skills"
+      ],
+      "permission_hints": [
+        "external_send"
+      ],
+      "estimated_tokens": 523
+    },
+    {
+      "id": "support-knowledge-base",
+      "name": "Support knowledge base",
+      "description": "Turn verified resolutions into searchable, task-oriented guidance; include prerequisites, safe troubleshooting and escalation; review accuracy and avoid exposing customer information.",
+      "version": "1.0.0",
+      "kind": "adapted",
+      "path": "bundles/support-knowledge-base/SKILL.md",
+      "sha256": "e814a00e1589224e4c1dd208ced4d6d7cb26c4d56fa897ec1625771b51f422b0",
+      "license": "MIT",
+      "source_ids": [
+        "claude-skills"
+      ],
+      "permission_hints": [],
+      "estimated_tokens": 532
+    },
+    {
+      "id": "financial-analyst",
+      "name": "Financial analysis",
+      "description": "Define assumptions, accounting scope and source dates; compare cash flow, scenarios and sensitivities with reproducible calculations; label forecasts and do not execute transactions.",
+      "version": "1.0.0",
+      "kind": "adapted",
+      "path": "bundles/financial-analyst/SKILL.md",
+      "sha256": "bc4db6eae87166c95cdced1aa1f708757de68ca76c71c922c47cda2f07c184d6",
+      "license": "MIT",
+      "source_ids": [
+        "claude-skills"
+      ],
+      "permission_hints": [
+        "file_read"
+      ],
+      "estimated_tokens": 524
+    },
+    {
+      "id": "webapp-testing",
+      "name": "Optional web application testing",
+      "description": "Plan authorized checks for user-visible behavior and failure paths; use an available, explicitly permitted testing runtime; retain real evidence and disclose tests that could not be executed.",
+      "version": "1.0.0",
+      "kind": "adapted",
+      "path": "bundles/webapp-testing/SKILL.md",
+      "sha256": "8b8e427e93a03ce675824bd8f7812994ea21f6d3e64fa2c50f5ae97a2c436d9d",
+      "license": "Apache-2.0",
+      "source_ids": [
+        "anthropics-skills"
+      ],
+      "permission_hints": [
+        "code_execute",
+        "network_read"
+      ],
+      "estimated_tokens": 531
+    },
+    {
+      "id": "skill-creator",
+      "name": "Optional skill authoring",
+      "description": "Define a precise skill trigger and workflow; create concise frontmatter and instructions with documented evidence requirements; evaluate on representative tasks and review licensing before publication.",
+      "version": "1.0.0",
+      "kind": "adapted",
+      "path": "bundles/skill-creator/SKILL.md",
+      "sha256": "b88b2da6323d0f4615290042b08eb94f25fc1e6108982ea745f94af0dd3370ea",
+      "license": "Apache-2.0",
+      "source_ids": [
+        "anthropics-skills"
+      ],
+      "permission_hints": [],
+      "estimated_tokens": 527
+    },
+    {
+      "id": "muse-video-briefs",
+      "name": "Video briefs and scripts",
+      "description": "Define audience, core message, duration and platform constraints; write a hook, scene sequence, narration and shot list; label production requirements and check asset rights before publication.",
+      "version": "1.0.0",
+      "kind": "original",
+      "path": "bundles/muse-video-briefs/SKILL.md",
+      "sha256": "cc21eff3d11d0823a516e6087c95ba0ff624dd9dcbb55f7021d6435d431dded4",
+      "license": "MIT",
+      "source_ids": [],
+      "permission_hints": [],
+      "estimated_tokens": 520
+    },
+    {
+      "id": "muse-thumbnail-briefs",
+      "name": "Thumbnail and visual briefs",
+      "description": "Specify one truthful focal concept, composition, contrast and mobile readability; prepare variations with asset provenance; avoid misleading imagery or unsupported performance claims.",
+      "version": "1.0.0",
+      "kind": "original",
+      "path": "bundles/muse-thumbnail-briefs/SKILL.md",
+      "sha256": "0d334e761c80d130d48cb79b879b6d73a2b932afecbf6a3898a50a9f2d08eec7",
+      "license": "MIT",
+      "source_ids": [],
+      "permission_hints": [],
+      "estimated_tokens": 521
+    },
+    {
+      "id": "muse-task-triage",
+      "name": "Task triage",
+      "description": "Classify new work by urgency, impact, prerequisites and authorization; assign an owner-selected responsibility and a clear next action; escalate blockers with concrete evidence.",
+      "version": "1.0.0",
+      "kind": "original",
+      "path": "bundles/muse-task-triage/SKILL.md",
+      "sha256": "3e0ae2d03f2bb5749d64ffb7c0846af9042fe3e5943fc21f95a7a1a0cb023063",
+      "license": "MIT",
+      "source_ids": [],
+      "permission_hints": [],
+      "estimated_tokens": 510
+    },
+    {
+      "id": "muse-sop-writing",
+      "name": "Operational SOPs",
+      "description": "Document purpose, prerequisites, safe steps, checks, rollback and escalation; separate read-only diagnosis from approval-sensitive actions; keep instructions portable across installations.",
+      "version": "1.0.0",
+      "kind": "original",
+      "path": "bundles/muse-sop-writing/SKILL.md",
+      "sha256": "9907008d76f552b9e4567c9563d62cb71f919b9c2452a16e9ea88832f3f854df",
+      "license": "MIT",
+      "source_ids": [],
+      "permission_hints": [],
+      "estimated_tokens": 519
+    },
+    {
+      "id": "muse-product-ux-ops",
+      "name": "Product and UX operations",
+      "description": "Write focused PRDs and acceptance criteria; review navigation, accessibility and responsive usability; propose wireframes and validation tasks with explicit evidence and ownership.",
+      "version": "1.0.0",
+      "kind": "original",
+      "path": "bundles/muse-product-ux-ops/SKILL.md",
+      "sha256": "f3ae90ed2a01e88fc12c109a249910a98f05191e679203bef8a7fa3a84a77c18",
+      "license": "MIT",
+      "source_ids": [],
+      "permission_hints": [],
+      "estimated_tokens": 509
+    },
+    {
+      "id": "muse-security-triage",
+      "name": "Security and privacy triage",
+      "description": "Bound authorized systems and data handling; map threats and consent requirements; document reproducible findings, severity and remediation without acquiring or publishing private data.",
+      "version": "1.0.0",
+      "kind": "original",
+      "path": "bundles/muse-security-triage/SKILL.md",
+      "sha256": "3bb4f053850a9e894544fc592517642344f6c7c1b47084955f87ec1f11f643b5",
+      "license": "MIT",
+      "source_ids": [],
+      "permission_hints": [
+        "file_read"
+      ],
+      "estimated_tokens": 512
+    },
+    {
+      "id": "muse-data-analysis",
+      "name": "Data insight workflow",
+      "description": "Inventory consented data and quality issues; define questions, metrics and reproducible transformations; produce interpretable charts and report uncertainty, lineage and privacy constraints.",
+      "version": "1.0.0",
+      "kind": "original",
+      "path": "bundles/muse-data-analysis/SKILL.md",
+      "sha256": "e0703955de4a90b06377291f260df617b39860e7d9aed65edfa7aa8e077688d9",
+      "license": "MIT",
+      "source_ids": [],
+      "permission_hints": [
+        "file_read",
+        "code_execute"
+      ],
+      "estimated_tokens": 513
+    },
+    {
+      "id": "muse-support-ops",
+      "name": "Support operations",
+      "description": "Draft onboarding, FAQs and response macros from verified product behavior; classify severity and route escalations; keep promises, privacy and publication authority explicit.",
+      "version": "1.0.0",
+      "kind": "original",
+      "path": "bundles/muse-support-ops/SKILL.md",
+      "sha256": "bcb3f62cfaea8d87c4792237bbfd2de7fe43d8447a82ef692f5a3483a48a800c",
+      "license": "MIT",
+      "source_ids": [],
+      "permission_hints": [],
+      "estimated_tokens": 511
+    },
+    {
+      "id": "muse-finance-planning",
+      "name": "Budget and scenario planning",
+      "description": "Build owner-reviewed budget and forecast scenarios with stated assumptions; compare cash runway, sensitivity and variance using reproducible calculations; no funds movement or payment authority is implied.",
+      "version": "1.0.0",
+      "kind": "original",
+      "path": "bundles/muse-finance-planning/SKILL.md",
+      "sha256": "c9966fa6336af19249c0f845a54b8c91ed2a037afb8cfbb3fb0a7226b0b2a4e5",
+      "license": "MIT",
+      "source_ids": [],
+      "permission_hints": [
+        "file_read"
+      ],
+      "estimated_tokens": 531
+    }
+  ]
+}

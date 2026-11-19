@@ -1,0 +1,14 @@
+{
+  "kind": "adapted",
+  "source_ids": [
+    "claude-skills"
+  ],
+  "license": "MIT",
+  "repository": "alirezarezvani/claude-skills",
+  "commit": "f8593c4941210a621a6629ce1da9e07897976d5f",
+  "path": "product-team/skills/product-manager-toolkit/SKILL.md",
+  "sha256": "ecd62fa7837d451d68f505350a95756d27384f0bbec8dbbb0ed01e6a3668953c",
+  "license_path": "LICENSE",
+  "license_sha256": "a20126646f93d32a8989c3cf4772d59194f405034f7babe7daebeac22b8ab151",
+  "reference_path": "bundles/product-manager-toolkit/references/upstream.md"
+}

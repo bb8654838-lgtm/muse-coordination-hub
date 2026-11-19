@@ -1,0 +1,327 @@
+{
+  "schema_version": 1,
+  "sources": [
+    {
+      "id": "marketingskills",
+      "repository": "coreyhaines31/marketingskills",
+      "commit": "73573e94a06a39965978b3fa1f9c1eace8cebc7c",
+      "license": "MIT",
+      "license_path": "LICENSE",
+      "license_sha256": "b70d71e24e40fce5da8f4b6f9cd862096a048e433db7f3c8cac5e348e6d34591",
+      "verified_at": "2026-11-19T09:14:08.789420Z",
+      "files": [
+        {
+          "path": "skills/copywriting/SKILL.md",
+          "sha256": "86dc0466493e8ac59ab17a8f28fd1403e2a322921ed2a8f96b2d0c442ad99d01",
+          "bundled_path": "bundles/copywriting/references/upstream.md",
+          "license_path": "LICENSE",
+          "license_sha256": "b70d71e24e40fce5da8f4b6f9cd862096a048e433db7f3c8cac5e348e6d34591",
+          "bundled_license_path": "upstream/marketingskills/c693279643b8/LICENSE.txt"
+        },
+        {
+          "path": "skills/pricing/SKILL.md",
+          "sha256": "4f0a939631eca1b4bbee22bf6bc88b35ac06c33bfa8e4e837c8767a4bf6f5b54",
+          "bundled_path": "bundles/pricing-strategy/references/upstream.md",
+          "license_path": "LICENSE",
+          "license_sha256": "b70d71e24e40fce5da8f4b6f9cd862096a048e433db7f3c8cac5e348e6d34591",
+          "bundled_license_path": "upstream/marketingskills/c693279643b8/LICENSE.txt"
+        },
+        {
+          "path": "skills/launch/SKILL.md",
+          "sha256": "e4cda379ce9956f3d052e6fd40899f4094b267d21f4297dba73de24a9c93fb73",
+          "bundled_path": "bundles/launch-strategy/references/upstream.md",
+          "license_path": "LICENSE",
+          "license_sha256": "b70d71e24e40fce5da8f4b6f9cd862096a048e433db7f3c8cac5e348e6d34591",
+          "bundled_license_path": "upstream/marketingskills/c693279643b8/LICENSE.txt"
+        },
+        {
+          "path": "skills/marketing-ideas/SKILL.md",
+          "sha256": "b64d0d8125d272cc87ac25f5df4f0ea3c5dd5a58c3496007cb1ce3924f14cc7d",
+          "bundled_path": "bundles/marketing-ideas/references/upstream.md",
+          "license_path": "LICENSE",
+          "license_sha256": "b70d71e24e40fce5da8f4b6f9cd862096a048e433db7f3c8cac5e348e6d34591",
+          "bundled_license_path": "upstream/marketingskills/c693279643b8/LICENSE.txt"
+        },
+        {
+          "path": "skills/ads/SKILL.md",
+          "sha256": "2d57d64ddbc60aa596ba855ba927d05eb0f19436f13f4befcf4e8aad453ad521",
+          "bundled_path": "bundles/paid-ads/references/upstream.md",
+          "license_path": "LICENSE",
+          "license_sha256": "b70d71e24e40fce5da8f4b6f9cd862096a048e433db7f3c8cac5e348e6d34591",
+          "bundled_license_path": "upstream/marketingskills/c693279643b8/LICENSE.txt"
+        },
+        {
+          "path": "skills/social/SKILL.md",
+          "sha256": "3082657de646386764881e7495d50de5b2ede53b15cd7c3b1f6d6a5d8a99f033",
+          "bundled_path": "bundles/social-content/references/upstream.md",
+          "license_path": "LICENSE",
+          "license_sha256": "b70d71e24e40fce5da8f4b6f9cd862096a048e433db7f3c8cac5e348e6d34591",
+          "bundled_license_path": "upstream/marketingskills/c693279643b8/LICENSE.txt"
+        },
+        {
+          "path": "skills/content-strategy/SKILL.md",
+          "sha256": "6bc1c8df711a6c9466e312dca9c99a895bd76989b7a52d0f39dca340db3bc5f5",
+          "bundled_path": "bundles/content-strategy/references/upstream.md",
+          "license_path": "LICENSE",
+          "license_sha256": "b70d71e24e40fce5da8f4b6f9cd862096a048e433db7f3c8cac5e348e6d34591",
+          "bundled_license_path": "upstream/marketingskills/c693279643b8/LICENSE.txt"
+        },
+        {
+          "path": "skills/seo-audit/SKILL.md",
+          "sha256": "fb345045339bb0645029c1c0d682703d262f045a7184fe96cb0e13f509468e2a",
+          "bundled_path": "bundles/seo-audit/references/upstream.md",
+          "license_path": "LICENSE",
+          "license_sha256": "b70d71e24e40fce5da8f4b6f9cd862096a048e433db7f3c8cac5e348e6d34591",
+          "bundled_license_path": "upstream/marketingskills/c693279643b8/LICENSE.txt"
+        }
+      ]
+    },
+    {
+      "id": "humanizer",
+      "repository": "blader/humanizer",
+      "commit": "b48c832f0f809c1b5658edbb838c2521b72f2413",
+      "license": "MIT",
+      "license_path": "LICENSE",
+      "license_sha256": "4ac4810254ab36d45419141aeb8e69bf50652cfafe5b2dab947d06d44e5cbf96",
+      "verified_at": "2026-11-19T09:14:08.789420Z",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "sha256": "804a119e924ac30295b298213e0b71b3e38b2667b8ef4fb7b69e9246369b9045",
+          "bundled_path": "bundles/humanizer/references/upstream.md",
+          "license_path": "LICENSE",
+          "license_sha256": "4ac4810254ab36d45419141aeb8e69bf50652cfafe5b2dab947d06d44e5cbf96",
+          "bundled_license_path": "upstream/humanizer/c693279643b8/LICENSE.txt"
+        }
+      ]
+    },
+    {
+      "id": "ecc",
+      "repository": "affaan-m/ECC",
+      "commit": "3f14a103a8694e51c1df9a806217a6d0b5f7a6f7",
+      "license": "MIT",
+      "license_path": "LICENSE",
+      "license_sha256": "326146379f01bb137c0a5d3c54770c1aa31076705c8b88a7f6b26a460f6221b2",
+      "verified_at": "2026-11-19T09:14:08.789420Z",
+      "files": [
+        {
+          "path": "skills/coding-standards/SKILL.md",
+          "sha256": "e80544c3d1eac5b14f22022146bd91a6b0ecc30e099cf5181894853aeb81dee1",
+          "bundled_path": "bundles/ecc-coding-standards/references/upstream.md",
+          "license_path": "LICENSE",
+          "license_sha256": "326146379f01bb137c0a5d3c54770c1aa31076705c8b88a7f6b26a460f6221b2",
+          "bundled_license_path": "upstream/ecc/c693279643b8/LICENSE.txt"
+        },
+        {
+          "path": "skills/python-patterns/SKILL.md",
+          "sha256": "103e0130dac33a49d26705fc5a2df804980fcab6a0138d65bc7f370a987d49f6",
+          "bundled_path": "bundles/ecc-python-patterns/references/upstream.md",
+          "license_path": "LICENSE",
+          "license_sha256": "326146379f01bb137c0a5d3c54770c1aa31076705c8b88a7f6b26a460f6221b2",
+          "bundled_license_path": "upstream/ecc/c693279643b8/LICENSE.txt"
+        },
+        {
+          "path": "skills/security-review/SKILL.md",
+          "sha256": "58fe0f172e73c3f870cb2e65b9dc171316643808e95e8c1a2b6ea59fc3291760",
+          "bundled_path": "bundles/ecc-security-review/references/upstream.md",
+          "license_path": "LICENSE",
+          "license_sha256": "326146379f01bb137c0a5d3c54770c1aa31076705c8b88a7f6b26a460f6221b2",
+          "bundled_license_path": "upstream/ecc/c693279643b8/LICENSE.txt"
+        },
+        {
+          "path": "skills/verification-loop/SKILL.md",
+          "sha256": "9ee288d426660b0c785f534a003a4960fb4d8083a21302d8a4fd9b035b2edbb1",
+          "bundled_path": "bundles/ecc-verification-loop/references/upstream.md",
+          "license_path": "LICENSE",
+          "license_sha256": "326146379f01bb137c0a5d3c54770c1aa31076705c8b88a7f6b26a460f6221b2",
+          "bundled_license_path": "upstream/ecc/c693279643b8/LICENSE.txt"
+        },
+        {
+          "path": "skills/verification-loop/SKILL.md",
+          "sha256": "9ee288d426660b0c785f534a003a4960fb4d8083a21302d8a4fd9b035b2edbb1",
+          "bundled_path": "bundles/ecc-verification-before-completion/references/upstream.md",
+          "license_path": "LICENSE",
+          "license_sha256": "326146379f01bb137c0a5d3c54770c1aa31076705c8b88a7f6b26a460f6221b2",
+          "bundled_license_path": "upstream/ecc/c693279643b8/LICENSE.txt"
+        },
+        {
+          "path": "skills/deep-research/SKILL.md",
+          "sha256": "ca02a97ff8cd794c55a1313ab423a6a165fdf2ce59059a73e08f7cfd957b5319",
+          "bundled_path": "bundles/muse-multi-source-research/references/upstream.md",
+          "license_path": "LICENSE",
+          "license_sha256": "326146379f01bb137c0a5d3c54770c1aa31076705c8b88a7f6b26a460f6221b2",
+          "bundled_license_path": "upstream/ecc/c693279643b8/LICENSE.txt"
+        }
+      ]
+    },
+    {
+      "id": "superpowers",
+      "repository": "obra/superpowers",
+      "commit": "22f0b463e7a5e579904dd6211a520321035526f7",
+      "license": "MIT",
+      "license_path": "LICENSE",
+      "license_sha256": "a37e0e9697144819e1d965176ac4ae5bc3fa02d11e7812036bbcadf6dafe2400",
+      "verified_at": "2026-11-19T09:14:08.789420Z",
+      "files": [
+        {
+          "path": "skills/test-driven-development/SKILL.md",
+          "sha256": "64b03fce4aee5a97a93160cea8111f3ba13a17b7c001db4bd5836d67fd10705d",
+          "bundled_path": "bundles/test-driven-development/references/upstream.md",
+          "license_path": "LICENSE",
+          "license_sha256": "a37e0e9697144819e1d965176ac4ae5bc3fa02d11e7812036bbcadf6dafe2400",
+          "bundled_license_path": "upstream/superpowers/c693279643b8/LICENSE.txt"
+        },
+        {
+          "path": "skills/systematic-debugging/SKILL.md",
+          "sha256": "51c6435d98c83c42c96ba7c35725a0b2c376cd487fb1a4e6bd0ddbe7e33ef202",
+          "bundled_path": "bundles/systematic-debugging/references/upstream.md",
+          "license_path": "LICENSE",
+          "license_sha256": "a37e0e9697144819e1d965176ac4ae5bc3fa02d11e7812036bbcadf6dafe2400",
+          "bundled_license_path": "upstream/superpowers/c693279643b8/LICENSE.txt"
+        },
+        {
+          "path": "skills/requesting-code-review/SKILL.md",
+          "sha256": "2180e14a448e9410bec88e6646a2d1f0ce7fdd58de27388c1e052e929679d2bc",
+          "bundled_path": "bundles/requesting-code-review/references/upstream.md",
+          "license_path": "LICENSE",
+          "license_sha256": "a37e0e9697144819e1d965176ac4ae5bc3fa02d11e7812036bbcadf6dafe2400",
+          "bundled_license_path": "upstream/superpowers/c693279643b8/LICENSE.txt"
+        },
+        {
+          "path": "skills/verification-before-completion/SKILL.md",
+          "sha256": "2befe7fc55bcadaa3d97dd9e8efeb633d2561c0ebe74c5a8b17c4d9e7e4520b3",
+          "bundled_path": "bundles/verification-before-completion/references/upstream.md",
+          "license_path": "LICENSE",
+          "license_sha256": "a37e0e9697144819e1d965176ac4ae5bc3fa02d11e7812036bbcadf6dafe2400",
+          "bundled_license_path": "upstream/superpowers/c693279643b8/LICENSE.txt"
+        },
+        {
+          "path": "skills/writing-plans/SKILL.md",
+          "sha256": "a6c67c1900064347c2a329990dd3c555657c51c3ec53b259a08aa01a2c26139a",
+          "bundled_path": "bundles/writing-plans/references/upstream.md",
+          "license_path": "LICENSE",
+          "license_sha256": "a37e0e9697144819e1d965176ac4ae5bc3fa02d11e7812036bbcadf6dafe2400",
+          "bundled_license_path": "upstream/superpowers/c693279643b8/LICENSE.txt"
+        },
+        {
+          "path": "skills/executing-plans/SKILL.md",
+          "sha256": "deaf176fa179827e80f2ea3101db3ea90fdf562ebef340eba761e4687940f5f5",
+          "bundled_path": "bundles/executing-plans/references/upstream.md",
+          "license_path": "LICENSE",
+          "license_sha256": "a37e0e9697144819e1d965176ac4ae5bc3fa02d11e7812036bbcadf6dafe2400",
+          "bundled_license_path": "upstream/superpowers/c693279643b8/LICENSE.txt"
+        },
+        {
+          "path": "skills/dispatching-parallel-agents/SKILL.md",
+          "sha256": "1968923066f3b707eb01d1992cdf4c42284c3855f70253b9cd5000ff45fca13c",
+          "bundled_path": "bundles/dispatching-parallel-agents/references/upstream.md",
+          "license_path": "LICENSE",
+          "license_sha256": "a37e0e9697144819e1d965176ac4ae5bc3fa02d11e7812036bbcadf6dafe2400",
+          "bundled_license_path": "upstream/superpowers/c693279643b8/LICENSE.txt"
+        }
+      ]
+    },
+    {
+      "id": "claude-skills",
+      "repository": "alirezarezvani/claude-skills",
+      "commit": "f8593c4941210a621a6629ce1da9e07897976d5f",
+      "license": "MIT",
+      "license_path": "LICENSE",
+      "license_sha256": "a20126646f93d32a8989c3cf4772d59194f405034f7babe7daebeac22b8ab151",
+      "verified_at": "2026-11-19T09:14:08.789420Z",
+      "files": [
+        {
+          "path": "project-management/skills/scrum-master/SKILL.md",
+          "sha256": "8a70b00ededd807c06b356a9423e1c73eba823c6ffbd6b60d13de5d3a6a32fe8",
+          "bundled_path": "bundles/scrum-master/references/upstream.md",
+          "license_path": "LICENSE",
+          "license_sha256": "a20126646f93d32a8989c3cf4772d59194f405034f7babe7daebeac22b8ab151",
+          "bundled_license_path": "upstream/claude-skills/c693279643b8/LICENSE.txt"
+        },
+        {
+          "path": "project-management/skills/team-communications/SKILL.md",
+          "sha256": "99e9cb57717c31c0bb7be327f5b6cb0b7f21f5faac92b4b8c7390b44d85651c8",
+          "bundled_path": "bundles/team-composition/references/upstream.md",
+          "license_path": "LICENSE",
+          "license_sha256": "a20126646f93d32a8989c3cf4772d59194f405034f7babe7daebeac22b8ab151",
+          "bundled_license_path": "upstream/claude-skills/c693279643b8/LICENSE.txt"
+        },
+        {
+          "path": "product-team/skills/product-manager-toolkit/SKILL.md",
+          "sha256": "ecd62fa7837d451d68f505350a95756d27384f0bbec8dbbb0ed01e6a3668953c",
+          "bundled_path": "bundles/product-manager-toolkit/references/upstream.md",
+          "license_path": "LICENSE",
+          "license_sha256": "a20126646f93d32a8989c3cf4772d59194f405034f7babe7daebeac22b8ab151",
+          "bundled_license_path": "upstream/claude-skills/c693279643b8/LICENSE.txt"
+        },
+        {
+          "path": "product-team/skills/ux-researcher-designer/SKILL.md",
+          "sha256": "a7bdd54a5dbbd0a258e916dd5a77c221188e23327e60590a4d666439e5f1f88f",
+          "bundled_path": "bundles/ux-researcher-designer/references/upstream.md",
+          "license_path": "LICENSE",
+          "license_sha256": "a20126646f93d32a8989c3cf4772d59194f405034f7babe7daebeac22b8ab151",
+          "bundled_license_path": "upstream/claude-skills/c693279643b8/LICENSE.txt"
+        },
+        {
+          "path": "product-team/skills/product-analytics/SKILL.md",
+          "sha256": "1c459548d5209d83b97a19bdfbf1add985284a39a806d9c5ed471d01e811a250",
+          "bundled_path": "bundles/product-analytics/references/upstream.md",
+          "license_path": "LICENSE",
+          "license_sha256": "a20126646f93d32a8989c3cf4772d59194f405034f7babe7daebeac22b8ab151",
+          "bundled_license_path": "upstream/claude-skills/c693279643b8/LICENSE.txt"
+        },
+        {
+          "path": "business-growth/skills/customer-success-manager/SKILL.md",
+          "sha256": "54b13f595cfa511aa2aefb02605d6f828e3228ca359e8c2b17ffb0be23e8f167",
+          "bundled_path": "bundles/customer-success-manager/references/upstream.md",
+          "license_path": "LICENSE",
+          "license_sha256": "a20126646f93d32a8989c3cf4772d59194f405034f7babe7daebeac22b8ab151",
+          "bundled_license_path": "upstream/claude-skills/c693279643b8/LICENSE.txt"
+        },
+        {
+          "path": "business-operations/skills/knowledge-ops/SKILL.md",
+          "sha256": "219052a419506699ac72da7761ce8c95448df431f28084db04109b5202d33546",
+          "bundled_path": "bundles/support-knowledge-base/references/upstream.md",
+          "license_path": "LICENSE",
+          "license_sha256": "a20126646f93d32a8989c3cf4772d59194f405034f7babe7daebeac22b8ab151",
+          "bundled_license_path": "upstream/claude-skills/c693279643b8/LICENSE.txt"
+        },
+        {
+          "path": "finance/skills/financial-analyst/SKILL.md",
+          "sha256": "cf71815e44247f834605fa745d21b79a468f40449ba6c4602285f347d0d36f04",
+          "bundled_path": "bundles/financial-analyst/references/upstream.md",
+          "license_path": "LICENSE",
+          "license_sha256": "a20126646f93d32a8989c3cf4772d59194f405034f7babe7daebeac22b8ab151",
+          "bundled_license_path": "upstream/claude-skills/c693279643b8/LICENSE.txt"
+        }
+      ]
+    },
+    {
+      "id": "anthropics-skills",
+      "repository": "anthropics/skills",
+      "commit": "e4bb5d960d87126ff3b3a8af1a104b7db67560ba",
+      "license": "Apache-2.0",
+      "license_path": "skills/webapp-testing/LICENSE.txt",
+      "license_sha256": "bc6b3af2f331cbc7fb0da1344efb2cbe5877a31498b4d70dbc7000f3405a1362",
+      "verified_at": "2026-11-19T09:14:08.789420Z",
+      "files": [
+        {
+          "path": "skills/webapp-testing/SKILL.md",
+          "sha256": "51b7349e77ec63b7744a6f63647e7566a0b4d2e301121cc10e8c2113af6556a2",
+          "bundled_path": "bundles/webapp-testing/references/upstream.md",
+          "license_path": "skills/webapp-testing/LICENSE.txt",
+          "license_sha256": "bc6b3af2f331cbc7fb0da1344efb2cbe5877a31498b4d70dbc7000f3405a1362",
+          "bundled_license_path": "upstream/anthropics-skills/944ca90b0eb0/LICENSE.txt"
+        },
+        {
+          "path": "skills/skill-creator/SKILL.md",
+          "sha256": "dcd4803e61e913e6fc27294184cd3a71f09f5e924ff20c8a9a20173e7b3c2bcf",
+          "bundled_path": "bundles/skill-creator/references/upstream.md",
+          "license_path": "skills/skill-creator/LICENSE.txt",
+          "license_sha256": "bc6b3af2f331cbc7fb0da1344efb2cbe5877a31498b4d70dbc7000f3405a1362",
+          "bundled_license_path": "upstream/anthropics-skills/6583e4cfa483/LICENSE.txt"
+        }
+      ]
+    }
+  ]
+}

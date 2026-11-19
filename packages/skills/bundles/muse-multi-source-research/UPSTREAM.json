@@ -1,0 +1,14 @@
+{
+  "kind": "adapted",
+  "source_ids": [
+    "ecc"
+  ],
+  "license": "MIT",
+  "repository": "affaan-m/ECC",
+  "commit": "3f14a103a8694e51c1df9a806217a6d0b5f7a6f7",
+  "path": "skills/deep-research/SKILL.md",
+  "sha256": "ca02a97ff8cd794c55a1313ab423a6a165fdf2ce59059a73e08f7cfd957b5319",
+  "license_path": "LICENSE",
+  "license_sha256": "326146379f01bb137c0a5d3c54770c1aa31076705c8b88a7f6b26a460f6221b2",
+  "reference_path": "bundles/muse-multi-source-research/references/upstream.md"
+}

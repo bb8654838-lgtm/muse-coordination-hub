@@ -1,0 +1,31 @@
+{
+  "kind": "composite",
+  "source_ids": [
+    "humanizer",
+    "marketingskills"
+  ],
+  "skill_ids": [
+    "content-strategy",
+    "social-content",
+    "seo-audit",
+    "humanizer",
+    "muse-video-briefs",
+    "muse-thumbnail-briefs"
+  ],
+  "sources": [
+    {
+      "id": "humanizer",
+      "repository": "blader/humanizer",
+      "commit": "b48c832f0f809c1b5658edbb838c2521b72f2413",
+      "license": "MIT",
+      "license_sha256": "4ac4810254ab36d45419141aeb8e69bf50652cfafe5b2dab947d06d44e5cbf96"
+    },
+    {
+      "id": "marketingskills",
+      "repository": "coreyhaines31/marketingskills",
+      "commit": "73573e94a06a39965978b3fa1f9c1eace8cebc7c",
+      "license": "MIT",
+      "license_sha256": "b70d71e24e40fce5da8f4b6f9cd862096a048e433db7f3c8cac5e348e6d34591"
+    }
+  ]
+}

@@ -12,7 +12,7 @@
     "build": "npm run build --workspace @muse/web",
     "typecheck": "npm run typecheck --workspace @muse/web",
     "validate:schema": "python3 scripts/validate_schema.py",
-    "test": "npm run validate:schema && python3 -m unittest discover -s tests -p 'test_*.py' && npm run check --workspace @muse/bridge",
+    "test": "npm run validate:schema && python3 -m unittest discover -s tests -p 'test_*.py' && node tests/skill_configuration_behavior.cjs && node tests/owner_configuration_behavior.cjs && npm run check --workspace @muse/bridge",
     "check": "npm run validate:schema && npm run typecheck && npm run check --workspace @muse/bridge"
   },
   "engines": {

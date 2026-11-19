@@ -1,0 +1,23 @@
+{
+  "kind": "composite",
+  "source_ids": [
+    "marketingskills"
+  ],
+  "skill_ids": [
+    "copywriting",
+    "pricing-strategy",
+    "launch-strategy",
+    "marketing-ideas",
+    "paid-ads",
+    "social-content"
+  ],
+  "sources": [
+    {
+      "id": "marketingskills",
+      "repository": "coreyhaines31/marketingskills",
+      "commit": "73573e94a06a39965978b3fa1f9c1eace8cebc7c",
+      "license": "MIT",
+      "license_sha256": "b70d71e24e40fce5da8f4b6f9cd862096a048e433db7f3c8cac5e348e6d34591"
+    }
+  ]
+}

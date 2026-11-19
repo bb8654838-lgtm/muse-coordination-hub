@@ -1,0 +1,14 @@
+{
+  "kind": "adapted",
+  "source_ids": [
+    "marketingskills"
+  ],
+  "license": "MIT",
+  "repository": "coreyhaines31/marketingskills",
+  "commit": "73573e94a06a39965978b3fa1f9c1eace8cebc7c",
+  "path": "skills/copywriting/SKILL.md",
+  "sha256": "86dc0466493e8ac59ab17a8f28fd1403e2a322921ed2a8f96b2d0c442ad99d01",
+  "license_path": "LICENSE",
+  "license_sha256": "b70d71e24e40fce5da8f4b6f9cd862096a048e433db7f3c8cac5e348e6d34591",
+  "reference_path": "bundles/copywriting/references/upstream.md"
+}

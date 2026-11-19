@@ -1,0 +1,14 @@
+{
+  "kind": "adapted",
+  "source_ids": [
+    "claude-skills"
+  ],
+  "license": "MIT",
+  "repository": "alirezarezvani/claude-skills",
+  "commit": "f8593c4941210a621a6629ce1da9e07897976d5f",
+  "path": "project-management/skills/team-communications/SKILL.md",
+  "sha256": "99e9cb57717c31c0bb7be327f5b6cb0b7f21f5faac92b4b8c7390b44d85651c8",
+  "license_path": "LICENSE",
+  "license_sha256": "a20126646f93d32a8989c3cf4772d59194f405034f7babe7daebeac22b8ab151",
+  "reference_path": "bundles/team-composition/references/upstream.md"
+}

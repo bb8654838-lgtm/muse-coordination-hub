@@ -1,0 +1,14 @@
+{
+  "kind": "adapted",
+  "source_ids": [
+    "claude-skills"
+  ],
+  "license": "MIT",
+  "repository": "alirezarezvani/claude-skills",
+  "commit": "f8593c4941210a621a6629ce1da9e07897976d5f",
+  "path": "project-management/skills/scrum-master/SKILL.md",
+  "sha256": "8a70b00ededd807c06b356a9423e1c73eba823c6ffbd6b60d13de5d3a6a32fe8",
+  "license_path": "LICENSE",
+  "license_sha256": "a20126646f93d32a8989c3cf4772d59194f405034f7babe7daebeac22b8ab151",
+  "reference_path": "bundles/scrum-master/references/upstream.md"
+}

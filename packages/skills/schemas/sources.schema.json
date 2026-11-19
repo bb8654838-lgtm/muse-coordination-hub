@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://muse.example/schemas/sources.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+            "maxLength": 120
+          },
+          "repository": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$"
+          },
+          "commit": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{40}$"
+          },
+          "license": {
+            "enum": [
+              "MIT",
+              "Apache-2.0"
+            ]
+          },
+          "license_path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "license_sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "verified_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "files": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "path": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{64}$"
+                },
+                "bundled_path": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "license_path": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "license_sha256": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{64}$"
+                },
+                "bundled_license_path": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "path",
+                "sha256",
+                "bundled_path",
+                "license_path",
+                "license_sha256",
+                "bundled_license_path"
+              ]
+            }
+          }
+        },
+        "required": [
+          "id",
+          "repository",
+          "commit",
+          "license",
+          "license_path",
+          "license_sha256",
+          "verified_at",
+          "files"
+        ]
+      }
+    }
+  },
+  "required": [
+    "schema_version",
+    "sources"
+  ]
+}

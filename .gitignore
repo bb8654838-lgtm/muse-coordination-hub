@@ -16,6 +16,7 @@ __pycache__/
 .venv/
 
 # test and tooling output
+.verification/
 coverage/
 .pytest_cache/
 *.tsbuildinfo

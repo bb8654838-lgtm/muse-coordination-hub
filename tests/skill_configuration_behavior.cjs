@@ -1,0 +1,58 @@
+/* Behavioral checks run against the actual TypeScript contract, not a copy. */
+const assert = require("node:assert/strict");
+const fs = require("node:fs");
+const path = require("node:path");
+const Module = require("node:module");
+const ts = require("typescript");
+const root = path.resolve(__dirname, "..");
+const filename = path.join(root, "apps/web/lib/configuration-contract.ts");
+const compiled = ts.transpileModule(fs.readFileSync(filename, "utf8"), {
+  compilerOptions: { target: ts.ScriptTarget.ES2020, module: ts.ModuleKind.CommonJS },
+}).outputText;
+const contractModule = new Module(filename, module);
+contractModule.paths = Module._nodeModulePaths(path.dirname(filename));
+contractModule._compile(compiled, filename);
+const c = contractModule.exports;
+const workspace = "11111111-1111-4111-8111-111111111111";
+const neutral = c.emptyConfiguration();
+assert.equal(neutral.role, null);
+assert.deepEqual(neutral.skills, []);
+assert.equal(Object.values(neutral.permissions).some(Boolean), false);
+assert.equal(c.configurationSyncBadge(0, 0), "Unconfigured");
+assert.equal(c.configurationSyncBadge(3, 0), "Not synced — Stage B required");
+assert.equal(c.configurationSyncBadge(3, 3), "Not synced — Stage B required");
+const request = { workspace_id: workspace, base_revision: 0, ...neutral };
+assert.equal(c.validateConfigurationInput(request).ok, true);
+const bad = (changes) => assert.equal(c.validateConfigurationInput({ ...request, ...changes }).ok, false);
+bad({ base_revision: -1 });
+bad({ base_revision: "0" });
+bad({ base_revision: Number.MAX_SAFE_INTEGER + 1 });
+bad({ workspace_id: "../another-owner" });
+bad({ role: { kind: "preset", id: "../../.env.local", version: "1.0.0" } });
+bad({ role: { kind: "custom", id: workspace, version: "latest" } });
+bad({ instructions: "x".repeat(c.MAX_INSTRUCTIONS_LENGTH + 1) });
+bad({ permissions: { external_send: "false" } });
+bad({ permissions: { unknown_permission: true } });
+bad({ applied_revision: 99 });
+bad({ skills: [{ source: "bundled", id: "test-driven-development", version: "1.0.0", enabled: true }, { source: "bundled", id: "test-driven-development", version: "1.0.0", enabled: false }] });
+bad({ skills: [{ source: "custom", id: workspace, version: 1, enabled: "yes" }] });
+bad({ skills: [{ source: "remote", id: "https://example.invalid/skill", version: "1.0.0", enabled: true }] });
+assert.equal(c.validateConfigurationInput({ ...request, role: { kind: "custom", id: workspace, version: 1 }, skills: [{ source: "custom", id: workspace, version: 1, enabled: false }] }).ok, true);
+assert.equal(c.validateConfigurationInput({ ...request, skills: [{ source: "bundled", id: "anything-neutral", version: "1.0.0", enabled: true }] }).ok, true); // Existence is checked server-side, not guessed in the client contract.
+assert.equal(c.validateConfigurationInput({ ...request, permissions: {} }).value.permissions.external_send, false);
+const preset = { id: "sales-growth", name: "Sales & Growth", version: "1.0.0", description: "Owner-selected growth work.", skill_ids: ["sales"], optional_skill_ids: ["video"] };
+const selected = c.selectPreset(preset, [{ id: "sales", version: "1.0.0" }, { id: "video", version: "1.0.0" }]);
+assert.deepEqual(selected.role, { kind: "preset", id: "sales-growth", version: "1.0.0" });
+assert.equal(selected.skills[0].enabled, true);
+assert.equal(selected.skills[1].enabled, false);
+assert.equal(Object.values(selected.permissions).some(Boolean), false);
+const markdown = "---\nname: incident-triage\ndescription: Review authorized incident evidence.\n---\n\n# Incident triage\n\nPreserve evidence and identify verified observations.\n";
+assert.equal(c.validateSkillInput({ workspace_id: workspace, content: markdown }).ok, true);
+assert.equal(c.validateSkillInput({ workspace_id: workspace, content: "# No frontmatter" }).ok, false);
+assert.equal(c.validateSkillInput({ workspace_id: workspace, content: markdown + "\u0000" }).ok, false);
+assert.equal(c.validateSkillInput({ workspace_id: workspace, content: markdown, skill_id: workspace }).ok, false);
+assert.equal(c.validateSkillInput({ workspace_id: workspace, content: markdown, skill_id: workspace, base_version: 1 }).ok, true);
+assert.equal(c.validateRoleInput({ workspace_id: workspace, name: "Custom reviewer", description: "Owner-defined", instructions: "Check sources.", skills: [], permissions: {} }).ok, true);
+assert.equal(c.validateRoleInput({ workspace_id: workspace, name: " ", description: "", instructions: "", skills: [], permissions: {} }).ok, false);
+assert.equal(c.estimateTokenCount("12345678"), 2);
+console.log("configuration behavior: PASS (neutral linking, explicit templates, strict revisions, permissions, versions, frontmatter, honest sync)");

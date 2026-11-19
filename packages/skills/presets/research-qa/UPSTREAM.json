@@ -1,0 +1,38 @@
+{
+  "kind": "composite",
+  "source_ids": [
+    "anthropics-skills",
+    "ecc",
+    "superpowers"
+  ],
+  "skill_ids": [
+    "muse-multi-source-research",
+    "systematic-debugging",
+    "ecc-verification-before-completion",
+    "ecc-security-review",
+    "webapp-testing"
+  ],
+  "sources": [
+    {
+      "id": "anthropics-skills",
+      "repository": "anthropics/skills",
+      "commit": "e4bb5d960d87126ff3b3a8af1a104b7db67560ba",
+      "license": "Apache-2.0",
+      "license_sha256": "bc6b3af2f331cbc7fb0da1344efb2cbe5877a31498b4d70dbc7000f3405a1362"
+    },
+    {
+      "id": "ecc",
+      "repository": "affaan-m/ECC",
+      "commit": "3f14a103a8694e51c1df9a806217a6d0b5f7a6f7",
+      "license": "MIT",
+      "license_sha256": "326146379f01bb137c0a5d3c54770c1aa31076705c8b88a7f6b26a460f6221b2"
+    },
+    {
+      "id": "superpowers",
+      "repository": "obra/superpowers",
+      "commit": "22f0b463e7a5e579904dd6211a520321035526f7",
+      "license": "MIT",
+      "license_sha256": "a37e0e9697144819e1d965176ac4ae5bc3fa02d11e7812036bbcadf6dafe2400"
+    }
+  ]
+}

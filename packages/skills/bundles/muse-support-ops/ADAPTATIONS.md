@@ -1,0 +1,3 @@
+# Adaptations — Support operations
+
+The installed Markdown is a concise, portable workflow derived from the pinned source when listed in UPSTREAM.json. Source text is preserved separately for attribution and inspection. No upstream scripts, hooks, installers, tools or local integrations are installed or executed. Host-specific folder assumptions, automatic execution and identity defaults are removed. Action permissions remain owner-controlled, deny-by-default declarations; enforcement and agent delivery are a later stage. Original adapter text is MIT-licensed; upstream notices remain unchanged.
