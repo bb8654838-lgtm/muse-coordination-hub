@@ -56,50 +56,134 @@ The hard limit has three layers:
 2. `agents` has a `before insert or update` trigger that locks the workspace row and rejects excess active agents.
 3. `register_agent(...)` performs invite validation and registration in one database transaction; the API maps `agent_limit_reached` to HTTP 409.
 
-## Local Setup
+## Beginner Quickstart
 
-Requirements: Node.js 20+, npm 10+, Python 3.10+, and a Supabase project or local Supabase CLI stack.
+Requirements: Node.js 20+, npm 10+, Python 3.10+ (for the Python bridge), and a Supabase project. A Vercel account is needed only for hosted deployment.
+
+### 1. Install and configure the web app
+
+Clone the repository, install dependencies, and copy the safe environment template.
+
+Linux/macOS:
 
 ```bash
-cp .env.example apps/web/.env.local
 npm install
-npm run test
+cp .env.example apps/web/.env.local
+```
+
+Windows PowerShell:
+
+```powershell
+npm install
+Copy-Item .env.example apps/web/.env.local
+```
+
+Fill the three Supabase runtime values and two independent HMAC peppers in `apps/web/.env.local`. Generate each pepper separately with this cross-platform command:
+
+```bash
+node -e "console.log(require('node:crypto').randomBytes(32).toString('hex'))"
+```
+
+Only variables prefixed with `NEXT_PUBLIC_` are browser-visible. Keep `SUPABASE_SERVICE_ROLE_KEY`, both HMAC peppers, database credentials, invite keys, and agent keys server-side and out of Git.
+
+### 2. Apply Supabase migrations 001-003
+
+Link the Supabase CLI and push the migrations. They run in filename order: `001_init.sql`, `002_agent_configuration.sql`, then `003_agent_configuration_sync.sql`.
+
+```bash
+npx supabase@latest login
+npx supabase@latest link --project-ref "$SUPABASE_PROJECT_REF"
+npx supabase@latest db push
+```
+
+On Windows PowerShell, use `$env:SUPABASE_PROJECT_REF` instead of `$SUPABASE_PROJECT_REF`. Alternatively, paste the three files from [`supabase/migrations`](supabase/migrations) into the Supabase SQL editor in the same order. Vercel deployment does **not** apply database migrations.
+
+### 3. Create the owner and first workspace
+
+1. In Supabase, open **Authentication -> Users**, create an email/password user, and copy its UUID. Muse has no public owner-signup route; the password stays in Supabase Auth and is not an application environment variable.
+2. In the Supabase SQL editor, create the workspace. The all-zero bootstrap hash disables agent registration until you rotate the invite in the dashboard.
+
+```sql
+insert into public.workspaces (owner_id, name, agent_limit, agent_invite_hash)
+values ('OWNER_AUTH_UUID', 'My Workspace', 10, repeat('0', 64));
+```
+
+3. Sign in at `/login`, open the owner dashboard, choose **Agent invite key**, and rotate it. The raw invite is displayed once; store it securely. Register agents with the commands in [Agent Registration](#agent-registration).
+
+### 4. Run locally or deploy to Vercel
+
+Local development:
+
+```bash
+npm run dev --workspace @muse/web
+```
+
+Open `http://localhost:3000/login`. Before a production deployment, run the same gates used by CI:
+
+```bash
+npm test
+npm run check
 npm run build
 ```
 
-The dashboard shell has deterministic preview data when no browser Supabase session exists. Server API routes require real Supabase values before they receive traffic.
+For Vercel, import the repository, keep the repository root as the project root, and add these five runtime variables in **Project Settings -> Environment Variables**:
 
-### Apply the migration
+- `NEXT_PUBLIC_SUPABASE_URL`
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+- `SUPABASE_SERVICE_ROLE_KEY`
+- `MUSE_AGENT_KEY_PEPPER`
+- `MUSE_INVITE_PEPPER`
 
-```bash
-supabase link --project-ref "$SUPABASE_PROJECT_REF"
-supabase db push
-```
-
-Do not expose `SUPABASE_SERVICE_ROLE_KEY`, either HMAC pepper, the database password, or agent keys to browser code. Only values prefixed `NEXT_PUBLIC_` are intentionally public.
-
-### Create the first workspace
-
-Generate independent random peppers, an invite key, and its HMAC hash outside the database. The hash inserted into `workspaces.agent_invite_hash` must use the same `MUSE_INVITE_PEPPER` configured on Vercel.
+Then deploy from the Vercel dashboard or CLI:
 
 ```bash
-export INVITE_KEY="$(openssl rand -base64 32)"
-export INVITE_HASH="$(node -e 'const {createHmac}=require("node:crypto"); process.stdout.write(createHmac("sha256", process.env.MUSE_INVITE_PEPPER).update(process.env.INVITE_KEY).digest("hex"))')"
-printf 'Store this invite key securely: %s\n' "$INVITE_KEY"
+npx vercel@latest --prod
 ```
 
-Insert a workspace from the Supabase SQL editor after replacing the authenticated owner's UUID and desired slug:
+### 5. Configure up to 10 agents from `/admin`
 
-```sql
-insert into public.workspaces (owner_id, name, slug, agent_limit, invite_key_hash)
-values ('OWNER_AUTH_UUID', 'My Workspace', 'my-workspace', 10, 'INVITE_HASH');
+After registering at least one agent, sign in as the workspace owner and open `/admin`:
+
+1. Select a connected agent slot. A workspace can have at most 10 active agents.
+2. In **Role template**, choose one of the 10 numbered starter presets, or keep a custom role.
+3. Review the preset's skills and action permissions; presets are starting points, not hidden grants.
+4. Save the configuration and repeat for each connected slot. The bridge acknowledgment moves the revision from pending to its applied state.
+
+Configuration snapshots are isolated per connection. Manual skill directories and legacy or unconfigured agents are not overwritten.
+
+### 6. Connect a Node or Python bridge with one command
+
+Registration returns a one-time `agent_key`. Replace the placeholders below and choose one command; environment variables are safer than CLI key flags. The watcher polls the inbox and synchronizes the assigned configuration at startup.
+
+Node, Linux/macOS:
+
+```bash
+MUSE_HUB_URL='http://localhost:3000' MUSE_AGENT_KEY='<agent-key>' node packages/bridge/src/cli.mjs inbox --watch --interval 60
 ```
 
-The raw invite key is used only for registration and is never stored by the hub.
+Node, Windows PowerShell:
+
+```powershell
+$env:MUSE_HUB_URL='http://localhost:3000'; $env:MUSE_AGENT_KEY='<agent-key>'; node packages/bridge/src/cli.mjs inbox --watch --interval 60
+```
+
+Python, Linux/macOS:
+
+```bash
+MUSE_HUB_URL='http://localhost:3000' MUSE_AGENT_KEY='<agent-key>' PYTHONPATH=packages/bridge/python python3 -m muse_bridge inbox --watch --interval 60
+```
+
+Python, Windows PowerShell:
+
+```powershell
+$env:MUSE_HUB_URL='http://localhost:3000'; $env:MUSE_AGENT_KEY='<agent-key>'; $env:PYTHONPATH='packages/bridge/python'; py -m muse_bridge inbox --watch --interval 60
+```
+
+For a hosted hub, replace `http://localhost:3000` with the Vercel URL. Managed snapshots default to `./skills/muse-managed/<connection-hash>/`; library callers can select another root with `skillsDirectory` (Node) or `skills_directory` (Python).
 
 ## Live configuration synchronization
 
-Stage B, Part 1 adds authenticated configuration pull and acknowledgment APIs, plus compatible Node/Python bridge skill synchronization. Configuration is applied into isolated immutable snapshots; manual skill files and unconfigured/legacy connections remain untouched. See [`packages/bridge/README.md`](packages/bridge/README.md) for startup integration, `MUSE_SKILLS_DIR`, the managed `current` pointer, and acknowledgment retry behavior.
+Stage B, Part 1 adds authenticated configuration pull and acknowledgment APIs, plus compatible Node/Python bridge skill synchronization. Configuration is applied into isolated immutable snapshots; manual skill files and unconfigured/legacy connections remain untouched. See [`packages/bridge/README.md`](packages/bridge/README.md) for startup integration, the managed `current` pointer, library directory options, and acknowledgment retry behavior.
 
 Apply [`003_agent_configuration_sync.sql`](supabase/migrations/003_agent_configuration_sync.sql) after migrations `001` and `002` before using live sync badges and acknowledgments. It adds sync metadata and bridge-attributed events, and resets a newly assigned revision to pending without advancing the last applied revision. Vercel deployment does not apply Supabase migrations.
 
