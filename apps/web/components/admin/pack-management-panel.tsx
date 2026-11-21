@@ -3,7 +3,14 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import styles from "./pack-management-panel.module.css";
 
-type CatalogPack = { pack_id: string; title: string; summary: string; latest_version: string; purchase_url: string };
+type CatalogPack = {
+  pack_id: string;
+  title?: string | null;
+  name?: string | null;
+  summary: string;
+  latest_version: string;
+  purchase_url: string;
+};
 type PackState = { pack_id: string; status: string; pack_version?: string | null; desired_revision?: number; applied_revision?: number };
 type CatalogResponse = { packs: CatalogPack[] };
 type StatusResponse = { packs: PackState[] };
@@ -11,6 +18,10 @@ type ApiError = { error?: string; message?: string };
 
 function friendlyStatus(status: string) {
   return status.replaceAll("_", " ").replace(/\b\w/g, (letter) => letter.toUpperCase());
+}
+
+function packTitle(pack: CatalogPack) {
+  return pack.title?.trim() || pack.name?.trim() || pack.pack_id;
 }
 
 async function api<T>(url: string, init?: RequestInit): Promise<T> {
@@ -52,7 +63,7 @@ export function PackManagementPanel({ workspaceId }: { workspaceId: string }) {
     try {
       await api("/api/packs/activate", { method: "POST", body: JSON.stringify({ workspace_id: workspaceId, pack_id: pack.pack_id, license_key: licenseKey }) });
       setLicenses((current) => ({ ...current, [pack.pack_id]: "" }));
-      setNotice(`${pack.title} is licensed for this workspace.`); await load();
+      setNotice(`${packTitle(pack)} is licensed for this workspace.`); await load();
     } catch (cause) { setError(cause instanceof Error ? cause.message : "License activation failed."); }
     finally { setBusy(null); }
   }
@@ -61,7 +72,7 @@ export function PackManagementPanel({ workspaceId }: { workspaceId: string }) {
     setBusy(`${pack.pack_id}:install`); setError(null); setNotice(null);
     try {
       await api("/api/packs/install", { method: "POST", body: JSON.stringify({ workspace_id: workspaceId, pack_id: pack.pack_id }) });
-      setNotice(`${pack.title} is installed and synchronized.`); await load();
+      setNotice(`${packTitle(pack)} is installed and synchronized.`); await load();
     } catch (cause) { setError(cause instanceof Error ? cause.message : "Pack installation failed."); }
     finally { setBusy(null); }
   }
@@ -78,7 +89,7 @@ export function PackManagementPanel({ workspaceId }: { workspaceId: string }) {
       const activating = busy === `${pack.pack_id}:activate`;
       const installing = busy === `${pack.pack_id}:install`;
       return <article className={styles.card} key={pack.pack_id}>
-        <div className={styles.cardTop}><div><span className={styles.version}>v{pack.latest_version}</span><h3>{pack.title}</h3></div><span className={`${styles.badge} ${status === "applied" ? styles.ready : status === "unlicensed" ? styles.locked : styles.active}`}>{friendlyStatus(status)}</span></div>
+        <div className={styles.cardTop}><div><span className={styles.version}>v{pack.latest_version}</span><h3>{packTitle(pack)}</h3></div><span className={`${styles.badge} ${status === "applied" ? styles.ready : status === "unlicensed" ? styles.locked : styles.active}`}>{friendlyStatus(status)}</span></div>
         <p className={styles.summary}>{pack.summary}</p>
         {current && status !== "unlicensed" && <dl className={styles.meta}><div><dt>Desired revision</dt><dd>{current.desired_revision ?? 0}</dd></div><div><dt>Applied revision</dt><dd>{current.applied_revision ?? 0}</dd></div></dl>}
         <div className={styles.actions}>
