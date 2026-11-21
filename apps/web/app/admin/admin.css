@@ -1,5 +1,6 @@
 .admin-shell { --admin-border: rgba(154,174,201,.22); --admin-muted: #a4b2c4; --admin-bg: #111925; --admin-accent: #b4d7ff; width: 100%; max-width: none; min-width: 0; min-height: 100dvh; margin: 0; padding: clamp(16px, 2vw, 28px); overflow-wrap: anywhere; color: #eef3fc; background: #090f18; font-family: var(--font-geist-sans), system-ui, sans-serif; }
 .admin-header { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px; padding-bottom: 24px; }
+.admin-header-actions { align-items: center; display: flex; flex-wrap: wrap; gap: 10px; justify-content: flex-end; }
 .admin-header h1 { margin: 6px 0; font-size: clamp(26px, 3vw, 38px); line-height: 1.15; letter-spacing: -.04em; }
 .admin-header p { margin: 8px 0 0; color: var(--admin-muted); }
 
